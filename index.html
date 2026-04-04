@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,94 +8,149 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="GDO"/>
 <meta name="theme-color" content="#0a0a0f"/>
-<title>GDO Control</title>
+<title>Garage Door Control</title>
 <style>
-/* ── RESET & VARS ── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#0a0a0f;--surface:#12121a;--panel:#1a1a28;--border:#2a2a40;
   --accent:#00e5ff;--danger:#ff3d5a;--success:#00ff99;--warn:#ffb020;
   --text:#e8e8f0;--muted:#5a5a7a;
 }
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body{min-height:100dvh;display:flex;flex-direction:column;align-items:center;padding:max(env(safe-area-inset-top),20px) 16px max(env(safe-area-inset-bottom),20px);background-image:radial-gradient(ellipse 80% 40% at 50% -10%,rgba(0,229,255,0.07) 0%,transparent 70%)}
+html,body{height:100%;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{min-height:100dvh;display:flex;flex-direction:column;align-items:center;
+  padding:max(env(safe-area-inset-top),16px) 12px max(env(safe-area-inset-bottom),16px);
+  background-image:radial-gradient(ellipse 80% 40% at 50% -10%,rgba(0,229,255,0.07) 0%,transparent 70%)}
 
-/* ── HEADER ── */
-header{width:100%;max-width:420px;display:flex;align-items:center;justify-content:space-between;padding:12px 0 10px}
-.logo{font-family:monospace;font-size:11px;letter-spacing:0.25em;color:var(--muted);text-transform:uppercase}
+/* HEADER */
+header{width:100%;max-width:420px;display:flex;align-items:center;
+  justify-content:space-between;padding:8px 0 10px}
+.logo{font-family:monospace;font-size:12px;letter-spacing:0.2em;
+  color:var(--muted);text-transform:uppercase}
 .logo span{color:var(--accent)}
-#conn-pill{display:flex;align-items:center;gap:7px;font-family:monospace;font-size:10px;letter-spacing:0.15em;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:5px 12px;transition:all 0.3s}
-#conn-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);transition:background 0.3s,box-shadow 0.3s}
+#conn-pill{display:flex;align-items:center;gap:6px;font-family:monospace;
+  font-size:10px;letter-spacing:0.12em;color:var(--muted);
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;padding:4px 10px;transition:all 0.3s}
+#conn-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);
+  transition:background 0.3s,box-shadow 0.3s}
 #conn-pill.connected #conn-dot{background:var(--success);box-shadow:0 0 8px var(--success)}
 #conn-pill.connected{color:var(--success);border-color:rgba(0,255,153,0.3)}
 #conn-pill.error #conn-dot{background:var(--danger);box-shadow:0 0 8px var(--danger)}
 #conn-pill.error{color:var(--danger);border-color:rgba(255,61,90,0.3)}
 
-/* ── CARD ── */
-.card{width:100%;max-width:420px;background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-top:14px}
+/* MAIN CARD */
+.card{width:100%;max-width:420px;background:var(--surface);
+  border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-top:10px}
 
-/* ── STATUS ── */
-.status-area{padding:28px 24px 20px;display:flex;flex-direction:column;align-items:center;gap:14px;background:linear-gradient(180deg,rgba(0,229,255,0.04) 0%,transparent 100%);border-bottom:1px solid var(--border)}
-.door-icon{width:80px;height:80px;display:flex;align-items:center;justify-content:center}
-.door-icon svg{width:80px;height:80px}
-#status-badge{font-family:monospace;font-size:13px;letter-spacing:0.2em;text-transform:uppercase;padding:6px 18px;border-radius:20px;border:1px solid var(--border);background:var(--panel);color:var(--muted);transition:all 0.4s}
-#status-badge.open{color:var(--success);border-color:rgba(0,255,153,0.4);background:rgba(0,255,153,0.06)}
-#status-badge.closed{color:var(--accent);border-color:rgba(0,229,255,0.4);background:rgba(0,229,255,0.06)}
-#status-badge.moving{color:var(--warn);border-color:rgba(255,176,32,0.4);background:rgba(255,176,32,0.06);animation:pulse 1s infinite}
+/* STATUS AREA */
+.status-area{padding:20px 20px 16px;display:flex;flex-direction:column;
+  align-items:center;gap:10px;
+  background:linear-gradient(180deg,rgba(0,229,255,0.04) 0%,transparent 100%);
+  border-bottom:1px solid var(--border)}
+.garage-title{font-family:monospace;font-size:11px;letter-spacing:0.25em;
+  color:var(--muted);text-transform:uppercase}
+#status-badge{font-family:monospace;font-size:15px;font-weight:600;
+  letter-spacing:0.15em;text-transform:uppercase;padding:8px 22px;
+  border-radius:20px;border:1px solid var(--border);
+  background:var(--panel);color:var(--muted);transition:all 0.4s}
+#status-badge.open{color:var(--success);border-color:rgba(0,255,153,0.4);
+  background:rgba(0,255,153,0.06)}
+#status-badge.closed{color:var(--accent);border-color:rgba(0,229,255,0.4);
+  background:rgba(0,229,255,0.06)}
+#status-badge.moving{color:var(--warn);border-color:rgba(255,176,32,0.4);
+  background:rgba(255,176,32,0.06);animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
 
-/* ── WARNING BANNER ── */
-#warn-banner{display:none;padding:12px 18px;background:rgba(255,176,32,0.1);border-bottom:1px solid rgba(255,176,32,0.3);align-items:center;gap:10px}
+/* WARNING BANNER */
+#warn-banner{display:none;padding:10px 16px;background:rgba(255,176,32,0.1);
+  border-bottom:1px solid rgba(255,176,32,0.3);align-items:center;gap:8px}
 #warn-banner.visible{display:flex}
-.warn-text{flex:1;font-family:monospace;font-size:11px;letter-spacing:0.1em;color:var(--warn)}
-#countdown{font-family:monospace;font-size:22px;font-weight:bold;color:var(--warn);min-width:28px;text-align:right}
+.warn-text{flex:1;font-family:monospace;font-size:10px;
+  letter-spacing:0.08em;color:var(--warn)}
+#countdown{font-family:monospace;font-size:20px;font-weight:bold;
+  color:var(--warn);min-width:26px;text-align:right}
 
-/* ── INDICATORS ── */
-.indicators{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border)}
-.ind{display:flex;align-items:center;gap:9px;padding:14px 18px;font-family:monospace;font-size:10px;letter-spacing:0.18em;color:var(--muted);text-transform:uppercase}
+/* INDICATORS */
+.indicators{display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:1px solid var(--border)}
+.ind{display:flex;align-items:center;gap:8px;padding:12px 16px;
+  font-family:monospace;font-size:10px;letter-spacing:0.15em;
+  color:var(--muted);text-transform:uppercase}
 .ind:first-child{border-right:1px solid var(--border)}
-.ind-dot{width:10px;height:10px;border-radius:50%;background:var(--border);transition:background 0.3s,box-shadow 0.3s;flex-shrink:0}
+.ind-dot{width:9px;height:9px;border-radius:50%;background:var(--border);
+  transition:background 0.3s,box-shadow 0.3s;flex-shrink:0}
 .ind.active-open .ind-dot{background:var(--success);box-shadow:0 0 8px var(--success)}
 .ind.active-close .ind-dot{background:var(--accent);box-shadow:0 0 8px var(--accent)}
 
-/* ── CONTROLS ── */
-.controls{padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.btn{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px 12px;border-radius:14px;border:1px solid var(--border);background:var(--panel);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all 0.15s;user-select:none;-webkit-user-select:none}
+/* CONTROLS */
+.controls{padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{position:relative;overflow:hidden;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:6px;padding:18px 10px;
+  border-radius:12px;border:1px solid var(--border);background:var(--panel);
+  color:var(--text);font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;
+  transition:all 0.15s;user-select:none;-webkit-user-select:none;
+  -webkit-appearance:none;appearance:none}
 .btn:active{transform:scale(0.95);opacity:0.8}
 .btn-open{border-color:rgba(0,255,153,0.35);background:rgba(0,255,153,0.06);color:var(--success)}
 .btn-close{border-color:rgba(0,229,255,0.35);background:rgba(0,229,255,0.06);color:var(--accent)}
-.btn-stop{grid-column:1/-1;border-color:rgba(255,61,90,0.4);background:rgba(255,61,90,0.07);color:var(--danger);padding:14px;flex-direction:row;gap:10px}
+.btn-stop{grid-column:1/-1;border-color:rgba(255,61,90,0.4);
+  background:rgba(255,61,90,0.07);color:var(--danger);
+  padding:13px;flex-direction:row;gap:8px;font-size:12px}
 
-/* ── LOG ── */
-.log-card{width:100%;max-width:420px;background:var(--surface);border:1px solid var(--border);border-radius:16px;margin-top:12px;overflow:hidden}
-.log-header{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--border);font-family:monospace;font-size:10px;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase}
-#log{padding:8px 14px;max-height:120px;overflow-y:auto;display:flex;flex-direction:column;gap:3px}
-.log-entry{font-family:monospace;font-size:11px;color:var(--muted);display:flex;gap:8px}
+/* LOG */
+.log-card{width:100%;max-width:420px;background:var(--surface);
+  border:1px solid var(--border);border-radius:14px;margin-top:10px;overflow:hidden}
+.log-header{display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;border-bottom:1px solid var(--border);
+  font-family:monospace;font-size:10px;letter-spacing:0.18em;
+  color:var(--muted);text-transform:uppercase}
+#log{padding:8px 12px;max-height:110px;overflow-y:auto;
+  display:flex;flex-direction:column;gap:3px}
+.log-entry{font-family:monospace;font-size:11px;color:var(--muted);
+  display:flex;gap:8px}
 .log-time{color:var(--border);flex-shrink:0}
 .log-entry.ok .log-msg{color:var(--success)}
 .log-entry.warn .log-msg{color:var(--warn)}
 .log-entry.err .log-msg{color:var(--danger)}
 .log-entry.info .log-msg{color:var(--text)}
 
-/* ── SETTINGS ── */
-.settings-card{width:100%;max-width:420px;background:var(--surface);border:1px solid var(--border);border-radius:16px;margin-top:12px;overflow:hidden;margin-bottom:20px}
-.settings-toggle{width:100%;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;background:none;border:none;color:var(--muted);font-family:monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-appearance:none;appearance:none}
+/* SETTINGS */
+.settings-card{width:100%;max-width:420px;background:var(--surface);
+  border:1px solid var(--border);border-radius:14px;
+  margin-top:10px;overflow:hidden;margin-bottom:16px}
+.settings-toggle{width:100%;padding:13px 14px;display:flex;align-items:center;
+  justify-content:space-between;background:none;border:none;
+  color:var(--muted);font-family:monospace;font-size:10px;
+  letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;-webkit-appearance:none;appearance:none}
 .settings-toggle svg{transition:transform 0.3s;flex-shrink:0}
 .settings-toggle.open svg{transform:rotate(180deg)}
-.settings-body{display:none;padding:0 16px 16px;flex-direction:column;gap:10px;border-top:1px solid var(--border)}
+.settings-body{display:none;padding:0 14px 14px;flex-direction:column;
+  gap:9px;border-top:1px solid var(--border)}
 .settings-body.visible{display:flex}
-.field{display:flex;flex-direction:column;gap:5px}
-.field label{font-family:monospace;font-size:10px;letter-spacing:0.15em;color:var(--muted);text-transform:uppercase}
-.field input{background:var(--panel);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:monospace;font-size:14px;padding:10px 12px;outline:none;-webkit-appearance:none;appearance:none;width:100%}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-family:monospace;font-size:10px;letter-spacing:0.12em;
+  color:var(--muted);text-transform:uppercase}
+.field input{background:var(--panel);border:1px solid var(--border);
+  border-radius:8px;color:var(--text);font-family:monospace;font-size:14px;
+  padding:9px 11px;outline:none;-webkit-appearance:none;appearance:none;width:100%}
 .field input:focus{border-color:var(--accent)}
-.btn-save{margin-top:4px;padding:12px;background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.4);border-radius:10px;color:var(--accent);font-family:monospace;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;width:100%;-webkit-appearance:none;appearance:none}
+.btn-save{margin-top:4px;padding:11px;background:rgba(0,229,255,0.1);
+  border:1px solid rgba(0,229,255,0.4);border-radius:9px;color:var(--accent);
+  font-family:monospace;font-size:11px;letter-spacing:0.12em;
+  text-transform:uppercase;cursor:pointer;width:100%;
+  -webkit-appearance:none;appearance:none}
 .btn-save:active{opacity:0.7}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo"><span>GDO</span> · CONTROL</div>
+  <div class="logo"><span>GARAGE</span> DOOR</div>
   <div id="conn-pill">
     <div id="conn-dot"></div>
     <span id="conn-label">OFFLINE</span>
@@ -104,21 +160,13 @@ header{width:100%;max-width:420px;display:flex;align-items:center;justify-conten
 <div class="card">
   <!-- Status -->
   <div class="status-area">
-    <div class="door-icon">
-      <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="6" width="68" height="70" rx="4" fill="none" stroke="#2a2a40" stroke-width="2.5"/>
-        <rect id="door-panel" x="10" y="10" width="60" height="62" rx="3" fill="#1a1a28" stroke="#3a3a55" stroke-width="1.5"/>
-        <rect x="14" y="14" width="52" height="24" rx="2" fill="none" stroke="#2a2a40" stroke-width="1.2"/>
-        <rect x="14" y="44" width="52" height="22" rx="2" fill="none" stroke="#2a2a40" stroke-width="1.2"/>
-        <circle cx="62" cy="41" r="3.5" fill="#3a3a55"/>
-      </svg>
-    </div>
+    <div class="garage-title">Door Status</div>
     <div id="status-badge">UNKNOWN</div>
   </div>
 
   <!-- Warning banner -->
   <div id="warn-banner">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
       <path d="M12 2L2 20h20L12 2z" stroke="#ffb020" stroke-width="2" stroke-linejoin="round"/>
       <path d="M12 9v5" stroke="#ffb020" stroke-width="2" stroke-linecap="round"/>
       <circle cx="12" cy="17" r="1" fill="#ffb020"/>
@@ -136,22 +184,27 @@ header{width:100%;max-width:420px;display:flex;align-items:center;justify-conten
   <!-- Controls -->
   <div class="controls">
     <button class="btn btn-open" id="btn-open">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-        <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       OPEN
     </button>
     <button class="btn btn-close" id="btn-close">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-        <path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       CLOSE
     </button>
     <button class="btn btn-stop" id="btn-stop">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
-        <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="3" width="18" height="18" rx="3" fill="none"
+          stroke="currentColor" stroke-width="2"/>
+        <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round"/>
+        <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round"/>
       </svg>
       CANCEL WARNING
     </button>
@@ -171,26 +224,30 @@ header{width:100%;max-width:420px;display:flex;align-items:center;justify-conten
 <div class="settings-card">
   <button class="settings-toggle" id="settings-toggle">
     <span>MQTT SETTINGS</span>
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
       <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
     </svg>
   </button>
   <div class="settings-body" id="settings-body">
     <div class="field">
       <label>Broker Host</label>
-      <input id="s-host" type="text" value="fce59eca27d3485487331774265b264c.s1.eu.hivemq.cloud" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input id="s-host" type="text"
+        value="fce59eca27d3485487331774265b264c.s1.eu.hivemq.cloud"
+        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
     </div>
     <div class="field">
-      <label>WebSocket Port</label>
+      <label>Port</label>
       <input id="s-port" type="number" value="8884" autocomplete="off"/>
     </div>
     <div class="field">
       <label>Client ID</label>
-      <input id="s-clientid" type="text" placeholder="gdo-iphone-01" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input id="s-clientid" type="text" placeholder="gdo-ui-001"
+        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
     </div>
     <div class="field">
       <label>Username</label>
-      <input id="s-user" type="text" value="gdouser" autocomplete="off" autocorrect="off" autocapitalize="off"/>
+      <input id="s-user" type="text" value="gdouser"
+        autocomplete="off" autocorrect="off" autocapitalize="off"/>
     </div>
     <div class="field">
       <label>Password</label>
@@ -201,32 +258,21 @@ header{width:100%;max-width:420px;display:flex;align-items:center;justify-conten
 </div>
 
 <script>
-// ── MINIMAL MQTT over WebSocket ───────────────────────────────
-// Self-contained implementation — no external libraries needed
-// Supports QoS 0 publish and subscribe over WSS
-
-var ws = null;
-var mqttConnected = false;
-var pingTimer = null;
-var reconnectTimer = null;
-var packetId = 1;
-
+// ── CONFIG ────────────────────────────────────────────────────
 var CFG = {
-  host: 'fce59eca27d3485487331774265b264c.s1.eu.hivemq.cloud',
-  port: 8884,
-  clientId: 'gdo-iphone-' + Math.random().toString(16).slice(2,8),
-  user: 'gdouser',
-  pass: 'Gdo12345!'
+  host:     'fce59eca27d3485487331774265b264c.s1.eu.hivemq.cloud',
+  port:     8884,
+  clientId: 'gdo-ui-' + Math.random().toString(16).slice(2,8),
+  user:     'gdouser',
+  pass:     'Gdo12345!'
 };
 
-// Load saved config
 try {
-  var saved = localStorage.getItem('gdo_cfg');
+  var saved = localStorage.getItem('gdo_cfg2');
   if (saved) CFG = Object.assign(CFG, JSON.parse(saved));
 } catch(e) {}
 
-// Apply to fields once DOM ready
-function applyConfigToFields() {
+function applyToFields() {
   document.getElementById('s-host').value     = CFG.host;
   document.getElementById('s-port').value     = CFG.port;
   document.getElementById('s-clientid').value = CFG.clientId;
@@ -234,311 +280,251 @@ function applyConfigToFields() {
   document.getElementById('s-pass').value     = CFG.pass || '';
 }
 
-// ── MQTT PACKET BUILDERS ──────────────────────────────────────
-function encodeString(str) {
-  var bytes = unescape(encodeURIComponent(str));
-  var len = bytes.length;
-  var arr = new Uint8Array(2 + len);
-  arr[0] = (len >> 8) & 0xff;
-  arr[1] = len & 0xff;
-  for (var i = 0; i < len; i++) arr[2+i] = bytes.charCodeAt(i);
-  return arr;
+// ── MQTT PACKET BUILDER ───────────────────────────────────────
+function encStr(s) {
+  var b = unescape(encodeURIComponent(s)), l = b.length;
+  var a = new Uint8Array(2 + l);
+  a[0] = (l >> 8) & 0xff; a[1] = l & 0xff;
+  for (var i = 0; i < l; i++) a[2+i] = b.charCodeAt(i);
+  return a;
 }
-
-function concat() {
-  var arrays = Array.prototype.slice.call(arguments);
-  var total = arrays.reduce(function(s,a){ return s + a.length; }, 0);
-  var out = new Uint8Array(total);
-  var offset = 0;
-  arrays.forEach(function(a){ out.set(a, offset); offset += a.length; });
+function cat() {
+  var args = Array.prototype.slice.call(arguments);
+  var tot = args.reduce(function(s,a){return s+a.length;},0);
+  var out = new Uint8Array(tot), off = 0;
+  args.forEach(function(a){out.set(a,off);off+=a.length;});
   return out;
 }
-
-function encodeRemainingLength(len) {
-  var bytes = [];
-  do {
-    var b = len & 0x7f;
-    len >>= 7;
-    if (len > 0) b |= 0x80;
-    bytes.push(b);
-  } while (len > 0);
-  return new Uint8Array(bytes);
+function remLen(n) {
+  var b = [];
+  do { var x = n&0x7f; n>>=7; if(n>0)x|=0x80; b.push(x); } while(n>0);
+  return new Uint8Array(b);
 }
-
-function buildConnect(clientId, user, pass) {
-  var protocol = encodeString('MQTT');
-  var varHeader = concat(
-    protocol,
-    new Uint8Array([4]),           // protocol level 4 = MQTT 3.1.1
-    new Uint8Array([user ? 0xC2 : 0x02]), // connect flags
-    new Uint8Array([0, 60])        // keepalive 60s
-  );
-  var payload = encodeString(clientId);
-  if (user) {
-    payload = concat(payload, encodeString(user), encodeString(pass || ''));
-  }
-  var remaining = concat(varHeader, payload);
-  return concat(
-    new Uint8Array([0x10]),
-    encodeRemainingLength(remaining.length),
-    remaining
-  );
+function mkConnect(id, user, pass) {
+  var proto = encStr('MQTT');
+  var flags = user ? 0xC2 : 0x02;
+  var vh = cat(proto, new Uint8Array([4,flags,0,60]));
+  var pl = encStr(id);
+  if (user) pl = cat(pl, encStr(user), encStr(pass||''));
+  var rem = cat(vh, pl);
+  return cat(new Uint8Array([0x10]), remLen(rem.length), rem);
 }
-
-function buildSubscribe(topic) {
-  var id = new Uint8Array([0, packetId++ & 0xff]);
-  var t  = encodeString(topic);
-  var payload = concat(id, t, new Uint8Array([0])); // QoS 0
-  return concat(
-    new Uint8Array([0x82]),
-    encodeRemainingLength(payload.length),
-    payload
-  );
+function mkSub(topic, pid) {
+  var id = new Uint8Array([0, pid&0xff]);
+  var t  = encStr(topic);
+  var pl = cat(id, t, new Uint8Array([0]));
+  return cat(new Uint8Array([0x82]), remLen(pl.length), pl);
 }
-
-function buildPublish(topic, message) {
-  var t = encodeString(topic);
-  var m = new TextEncoder().encode(message);
-  var payload = concat(t, m);
-  return concat(
-    new Uint8Array([0x30]),
-    encodeRemainingLength(payload.length),
-    payload
-  );
+function mkPub(topic, msg) {
+  var t = encStr(topic);
+  var m = new TextEncoder().encode(msg);
+  var pl = cat(t, m);
+  return cat(new Uint8Array([0x30]), remLen(pl.length), pl);
 }
-
-function buildPingreq() {
-  return new Uint8Array([0xC0, 0x00]);
-}
+function mkPing() { return new Uint8Array([0xC0,0x00]); }
 
 // ── MQTT PACKET PARSER ────────────────────────────────────────
-function parsePacket(data) {
-  var bytes = new Uint8Array(data);
-  if (bytes.length < 2) return null;
-  var type = (bytes[0] >> 4) & 0x0f;
-
-  // Decode remaining length
-  var mul = 1, remLen = 0, i = 1;
-  do {
-    remLen += (bytes[i] & 0x7f) * mul;
-    mul *= 128;
-    i++;
-  } while (bytes[i-1] & 0x80);
-
-  var headerLen = i;
-
-  if (type === 2) return { type: 'CONNACK', rc: bytes[headerLen+1] };
-  if (type === 9) return { type: 'SUBACK' };
-  if (type === 13) return { type: 'PINGRESP' };
-
-  if (type === 3) {
-    // PUBLISH
-    var topicLen = (bytes[headerLen] << 8) | bytes[headerLen+1];
-    var topic = new TextDecoder().decode(bytes.slice(headerLen+2, headerLen+2+topicLen));
-    var payload = new TextDecoder().decode(bytes.slice(headerLen+2+topicLen));
-    return { type: 'PUBLISH', topic: topic, payload: payload };
+function parsePkt(data) {
+  var b = new Uint8Array(data);
+  if (b.length < 2) return null;
+  var type = (b[0]>>4)&0x0f, mul=1, rem=0, i=1;
+  do { rem+=(b[i]&0x7f)*mul; mul*=128; i++; } while(b[i-1]&0x80);
+  var h = i;
+  if (type===2) return {type:'CONNACK', rc:b[h+1]};
+  if (type===9) return {type:'SUBACK'};
+  if (type===13) return {type:'PINGRESP'};
+  if (type===3) {
+    var tl = (b[h]<<8)|b[h+1];
+    var topic   = new TextDecoder().decode(b.slice(h+2, h+2+tl));
+    var payload = new TextDecoder().decode(b.slice(h+2+tl));
+    return {type:'PUBLISH', topic:topic, payload:payload};
   }
-  return { type: 'UNKNOWN', raw: bytes[0] };
+  return null;
 }
 
-// ── MQTT CONNECT ──────────────────────────────────────────────
+// ── STATE ─────────────────────────────────────────────────────
+var ws=null, mqttOk=false, pingT=null, reconT=null, pid=1;
+var warnActive=false, warnEnd=null, warnT=null, logCount=0;
+
+// ── CONNECTION ────────────────────────────────────────────────
 function mqttConnect() {
-  if (ws) { try { ws.close(); } catch(e) {} }
-  clearTimeout(reconnectTimer);
-  clearInterval(pingTimer);
-  mqttConnected = false;
+  if (ws) { try{ws.close();}catch(e){} ws=null; }
+  clearTimeout(reconT); clearInterval(pingT);
+  mqttOk = false;
+  setConn('connecting');
+  addLog('Connecting to ' + CFG.host + '...', 'info');
 
   var url = 'wss://' + CFG.host + ':' + CFG.port + '/mqtt';
-  addLog('Connecting to ' + CFG.host, 'info');
-  setConn('connecting');
-
   try {
-    ws = new WebSocket(url, ['mqtt']);
+    ws = new WebSocket(url, 'mqtt');
   } catch(e) {
-    addLog('WebSocket error: ' + e.message, 'err');
+    addLog('WS create failed: ' + e.message, 'err');
     setConn('error');
-    reconnectTimer = setTimeout(mqttConnect, 5000);
+    reconT = setTimeout(mqttConnect, 6000);
     return;
   }
-
   ws.binaryType = 'arraybuffer';
 
   ws.onopen = function() {
-    addLog('WebSocket open – sending CONNECT', 'info');
-    var pkt = buildConnect(CFG.clientId, CFG.user, CFG.pass);
-    ws.send(pkt.buffer);
+    addLog('Socket open — authenticating...', 'info');
+    try {
+      var pkt = mkConnect(CFG.clientId, CFG.user, CFG.pass);
+      ws.send(pkt.buffer);
+    } catch(e) {
+      addLog('CONNECT send failed: ' + e.message, 'err');
+    }
   };
 
-  ws.onmessage = function(event) {
-    var pkt = parsePacket(event.data);
-    if (!pkt) return;
-
-    if (pkt.type === 'CONNACK') {
-      if (pkt.rc === 0) {
-        mqttConnected = true;
-        setConn('connected');
-        addLog('MQTT connected', 'ok');
-        // Subscribe to status and warning topics
-        ws.send(buildSubscribe('gdo/status').buffer);
-        ws.send(buildSubscribe('gdo/warning').buffer);
-        // Start keepalive ping every 50s
-        pingTimer = setInterval(function() {
-          if (ws && ws.readyState === 1) ws.send(buildPingreq().buffer);
-        }, 50000);
-      } else {
-        addLog('MQTT refused rc=' + pkt.rc, 'err');
-        setConn('error');
+  ws.onmessage = function(ev) {
+    try {
+      var pkt = parsePkt(ev.data);
+      if (!pkt) return;
+      if (pkt.type==='CONNACK') {
+        if (pkt.rc===0) {
+          mqttOk = true;
+          setConn('connected');
+          addLog('MQTT connected!', 'ok');
+          pid=1;
+          ws.send(mkSub('gdo/status',  pid++).buffer);
+          ws.send(mkSub('gdo/warning', pid++).buffer);
+          pingT = setInterval(function(){
+            if(ws&&ws.readyState===1) ws.send(mkPing().buffer);
+          }, 45000);
+        } else {
+          addLog('Auth refused rc=' + pkt.rc, 'err');
+          setConn('error');
+        }
       }
-    }
-
-    if (pkt.type === 'PUBLISH') {
-      var payload = pkt.payload.trim();
-      if (pkt.topic === 'gdo/status') {
-        updateStatus(payload);
-        addLog('Door: ' + payload, payload==='OPEN'?'ok':payload==='MOVING'?'warn':'info');
+      if (pkt.type==='PUBLISH') {
+        var v = pkt.payload.trim();
+        if (pkt.topic==='gdo/status') {
+          updateStatus(v);
+          addLog('Door: ' + v, v==='OPEN'?'ok':v==='MOVING'?'warn':'info');
+        }
+        if (pkt.topic==='gdo/warning') {
+          if (v==='ON') showWarn(30); else hideWarn();
+        }
       }
-      if (pkt.topic === 'gdo/warning') {
-        if (payload === 'ON')  showWarning(30);
-        if (payload === 'OFF') hideWarning();
-      }
+    } catch(e) {
+      addLog('Parse error: '+e.message, 'err');
     }
   };
 
   ws.onerror = function(e) {
-    addLog('WebSocket error', 'err');
+    addLog('WebSocket error — check credentials', 'err');
     setConn('error');
   };
 
-  ws.onclose = function() {
-    mqttConnected = false;
-    clearInterval(pingTimer);
+  ws.onclose = function(e) {
+    mqttOk = false;
+    clearInterval(pingT);
     setConn('offline');
-    addLog('Disconnected – retrying in 5s', 'warn');
-    reconnectTimer = setTimeout(mqttConnect, 5000);
+    addLog('Disconnected (code ' + e.code + ') — retry in 6s', 'warn');
+    reconT = setTimeout(mqttConnect, 6000);
   };
 }
 
-function mqttPublish(topic, message) {
-  if (!mqttConnected || !ws || ws.readyState !== 1) {
-    addLog('Not connected', 'err');
-    return false;
+function mqttPublish(topic, msg) {
+  if (!mqttOk || !ws || ws.readyState!==1) {
+    addLog('Not connected — cannot send', 'err'); return;
   }
-  ws.send(buildPublish(topic, message).buffer);
-  return true;
-}
-
-// ── APP STATE ─────────────────────────────────────────────────
-var warnActive = false;
-var warnEnd    = null;
-var warnTimer  = null;
-var logCount   = 0;
-
-function sendCmd(cmd) {
-  if (mqttPublish('gdo/cmd', cmd)) {
-    addLog('→ Sent: ' + cmd, 'info');
+  try {
+    ws.send(mkPub(topic, msg).buffer);
+  } catch(e) {
+    addLog('Publish error: '+e.message, 'err');
   }
 }
 
-// ── STATUS UI ─────────────────────────────────────────────────
-function updateStatus(s) {
-  var badge = document.getElementById('status-badge');
-  var indO  = document.getElementById('ind-open');
-  var indC  = document.getElementById('ind-close');
-  badge.className = 'status-badge ' + s.toLowerCase();
-  badge.textContent = s;
-  indO.className = 'ind' + (s==='OPEN'   ? ' active-open'  : '');
-  indC.className = 'ind' + (s==='CLOSED' ? ' active-close' : '');
-}
-
-function showWarning(seconds) {
-  warnActive = true;
-  warnEnd = Date.now() + seconds * 1000;
-  document.getElementById('warn-banner').classList.add('visible');
-  document.getElementById('countdown').textContent = seconds;
-  clearInterval(warnTimer);
-  warnTimer = setInterval(function() {
-    var rem = Math.max(0, Math.ceil((warnEnd - Date.now()) / 1000));
-    document.getElementById('countdown').textContent = rem;
-    if (rem === 0) hideWarning();
-  }, 250);
-  addLog('⚠ Sounder ON – door moves in ' + seconds + 's', 'warn');
-}
-
-function hideWarning() {
-  warnActive = false;
-  clearInterval(warnTimer);
-  document.getElementById('warn-banner').classList.remove('visible');
-}
-
-// ── CONNECTION PILL ───────────────────────────────────────────
-function setConn(state) {
+// ── UI FUNCTIONS ──────────────────────────────────────────────
+function setConn(s) {
   var pill  = document.getElementById('conn-pill');
   var label = document.getElementById('conn-label');
   pill.className = '';
-  if (state === 'connected')  { pill.classList.add('connected'); label.textContent = 'ONLINE'; }
-  else if (state === 'error') { pill.classList.add('error');     label.textContent = 'ERROR'; }
-  else if (state === 'connecting') { label.textContent = 'CONNECTING'; }
-  else { label.textContent = 'OFFLINE'; }
+  if (s==='connected')  { pill.classList.add('connected'); label.textContent='ONLINE'; }
+  else if (s==='error') { pill.classList.add('error');     label.textContent='ERROR'; }
+  else if (s==='connecting') { label.textContent='CONNECTING'; }
+  else { label.textContent='OFFLINE'; }
 }
 
-// ── LOG ───────────────────────────────────────────────────────
+function updateStatus(s) {
+  var badge = document.getElementById('status-badge');
+  badge.textContent = s;
+  badge.className = 'status-badge ' + (s||'').toLowerCase();
+  document.getElementById('ind-open').className  = 'ind'+(s==='OPEN'  ?' active-open':'');
+  document.getElementById('ind-close').className = 'ind'+(s==='CLOSED'?' active-close':'');
+}
+
+function showWarn(sec) {
+  warnActive=true; warnEnd=Date.now()+sec*1000;
+  document.getElementById('warn-banner').classList.add('visible');
+  document.getElementById('countdown').textContent=sec;
+  clearInterval(warnT);
+  warnT=setInterval(function(){
+    var r=Math.max(0,Math.ceil((warnEnd-Date.now())/1000));
+    document.getElementById('countdown').textContent=r;
+    if(r===0){clearInterval(warnT);hideWarn();}
+  },250);
+  addLog('Sounder ON — door moves in '+sec+'s','warn');
+}
+function hideWarn(){
+  warnActive=false; clearInterval(warnT);
+  document.getElementById('warn-banner').classList.remove('visible');
+}
+
 function addLog(msg, type) {
-  type = type || 'info';
-  var el  = document.getElementById('log');
-  var now = new Date();
-  var ts  = now.toTimeString().slice(0,8);
-  var row = document.createElement('div');
-  row.className = 'log-entry ' + type;
-  row.innerHTML = '<span class="log-time">' + ts + '</span><span class="log-msg">' + msg + '</span>';
-  el.insertBefore(row, el.firstChild);
-  while (el.children.length > 30) el.removeChild(el.lastChild);
+  var el=document.getElementById('log');
+  var ts=new Date().toTimeString().slice(0,8);
+  var r=document.createElement('div');
+  r.className='log-entry '+(type||'info');
+  r.innerHTML='<span class="log-time">'+ts+'</span><span class="log-msg">'+msg+'</span>';
+  el.insertBefore(r,el.firstChild);
+  while(el.children.length>25)el.removeChild(el.lastChild);
   logCount++;
-  document.getElementById('log-count').textContent = logCount + ' event' + (logCount!==1?'s':'');
+  document.getElementById('log-count').textContent=logCount+' event'+(logCount!==1?'s':'');
 }
 
-// ── SETTINGS ──────────────────────────────────────────────────
+function sendCmd(cmd) {
+  mqttPublish('gdo/cmd', cmd);
+  addLog('→ Sent: '+cmd,'info');
+}
+
 function toggleSettings() {
-  var body = document.getElementById('settings-body');
-  var btn  = document.getElementById('settings-toggle');
-  body.classList.toggle('visible');
-  btn.classList.toggle('open');
+  document.getElementById('settings-body').classList.toggle('visible');
+  document.getElementById('settings-toggle').classList.toggle('open');
 }
 
 function saveAndConnect() {
-  CFG.host     = document.getElementById('s-host').value.trim()     || 'broker.hivemq.com';
-  CFG.port     = parseInt(document.getElementById('s-port').value)  || 8884;
-  CFG.clientId = document.getElementById('s-clientid').value.trim() || ('gdo-iphone-' + Math.random().toString(16).slice(2,8));
+  CFG.host     = document.getElementById('s-host').value.trim() || CFG.host;
+  CFG.port     = parseInt(document.getElementById('s-port').value) || 8884;
+  CFG.clientId = document.getElementById('s-clientid').value.trim() ||
+                 ('gdo-ui-'+Math.random().toString(16).slice(2,8));
   CFG.user     = document.getElementById('s-user').value.trim();
   CFG.pass     = document.getElementById('s-pass').value;
-  try { localStorage.setItem('gdo_cfg', JSON.stringify(CFG)); } catch(e) {}
-  addLog('Settings saved – connecting…', 'info');
+  try { localStorage.setItem('gdo_cfg2', JSON.stringify(CFG)); } catch(e){}
+  addLog('Settings saved','info');
   mqttConnect();
 }
 
-// ── INIT ──────────────────────────────────────────────────────
+// ── TOUCH-SAFE EVENT BINDING ──────────────────────────────────
 function addTap(id, fn) {
-  var el = document.getElementById(id);
-  if (!el) return;
-  var tapped = false;
-  el.addEventListener('touchend', function(e) {
-    e.preventDefault();
-    if (!tapped) { tapped = true; fn(); setTimeout(function(){ tapped=false; }, 300); }
-  });
-  el.addEventListener('click', function(e) {
-    if (!tapped) fn();
-  });
+  var el=document.getElementById(id);
+  if(!el)return;
+  var busy=false;
+  function go(e){ e.preventDefault(); if(!busy){busy=true;fn();setTimeout(function(){busy=false;},300);} }
+  el.addEventListener('touchend', go, {passive:false});
+  el.addEventListener('click', function(e){ if(!busy)fn(); });
 }
 
+// ── INIT ──────────────────────────────────────────────────────
 window.addEventListener('load', function() {
-  applyConfigToFields();
+  applyToFields();
   updateStatus('UNKNOWN');
 
-  // Wire all buttons with both touch and click
-  addTap('btn-open',  function(){ sendCmd('OPEN'); });
-  addTap('btn-close', function(){ sendCmd('CLOSE'); });
-  addTap('btn-stop',  function(){ sendCmd('STOP'); });
-  addTap('btn-save',  function(){ saveAndConnect(); });
-  addTap('settings-toggle', function(){ toggleSettings(); });
+  addTap('btn-open',        function(){sendCmd('OPEN');});
+  addTap('btn-close',       function(){sendCmd('CLOSE');});
+  addTap('btn-stop',        function(){sendCmd('STOP');});
+  addTap('btn-save',        function(){saveAndConnect();});
+  addTap('settings-toggle', function(){toggleSettings();});
 
   mqttConnect();
 });
