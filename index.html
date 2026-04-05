@@ -23,7 +23,8 @@ body{
   min-height:100dvh;display:flex;flex-direction:column;align-items:center;
   justify-content:flex-start;
   padding:max(env(safe-area-inset-top),12px) 8px max(env(safe-area-inset-bottom),12px);
-  background-image:radial-gradient(ellipse 80% 40% at 50% -10%,rgba(0,229,255,0.07) 0%,transparent 70%)
+  background-image:radial-gradient(ellipse 80% 40% at 50% -10%,rgba(0,229,255,0.07) 0%,transparent 70%);
+  overflow-y:auto
 }
 header{width:100%;max-width:380px;display:flex;align-items:center;
   justify-content:space-between;padding:8px 0 14px}
@@ -40,20 +41,24 @@ header{width:100%;max-width:380px;display:flex;align-items:center;
 #conn-pill.error #conn-dot{background:var(--danger);box-shadow:0 0 8px var(--danger)}
 #conn-pill.error{color:var(--danger);border-color:rgba(255,61,90,0.3)}
 .card{width:100%;max-width:380px;background:var(--surface);border:1px solid var(--border);
-  border-radius:18px;overflow:hidden;margin-top:10px}
-.status-area{padding:30px 16px 24px;display:flex;flex-direction:column;align-items:center;
+  border-radius:18px;overflow:hidden;margin-top:10px;flex-shrink:0}
+.status-area{padding:24px 16px 20px;display:flex;flex-direction:column;align-items:center;
   gap:14px;background:linear-gradient(180deg,rgba(0,229,255,0.04) 0%,transparent 100%);
   border-bottom:1px solid var(--border)}
 .garage-title{font-family:monospace;font-size:11px;letter-spacing:0.25em;
   color:var(--muted);text-transform:uppercase}
 .garage-title .lit{color:var(--accent);text-shadow:0 0 10px rgba(0,229,255,0.45)}
-#status-badge{font-family:monospace;font-size:18px;font-weight:700;letter-spacing:0.16em;
-  text-transform:uppercase;padding:14px 28px;border-radius:24px;border:1px solid var(--border);
-  background:var(--panel);color:var(--muted);transition:all 0.4s}
-#status-badge.open{color:var(--success);border-color:rgba(0,255,153,0.4);background:rgba(0,255,153,0.06)}
-#status-badge.closed{color:var(--accent);border-color:rgba(0,229,255,0.4);background:rgba(0,229,255,0.06)}
-#status-badge.moving{color:var(--warn);border-color:rgba(255,176,32,0.4);
-  background:rgba(255,176,32,0.06);animation:pulse 1s infinite}
+#status-badge{font-family:monospace;font-size:20px;font-weight:700;letter-spacing:0.16em;
+  text-transform:uppercase;padding:14px 32px;border-radius:24px;border:2px solid var(--border);
+  background:var(--panel);color:#aaaacc;transition:all 0.4s}
+#status-badge.open{color:#00ffaa;border-color:rgba(0,255,170,0.6);
+  background:rgba(0,255,153,0.1);text-shadow:0 0 12px rgba(0,255,153,0.5)}
+#status-badge.closed{color:#00eeff;border-color:rgba(0,238,255,0.6);
+  background:rgba(0,229,255,0.1);text-shadow:0 0 12px rgba(0,229,255,0.5)}
+#status-badge.moving{color:#ffbb30;border-color:rgba(255,187,48,0.5);
+  background:rgba(255,176,32,0.1);animation:pulse 1s infinite;
+  text-shadow:0 0 12px rgba(255,176,32,0.4)}
+#status-badge.unknown{color:#aaaacc;border-color:var(--border);background:var(--panel)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
 
 /* WARNING BANNER */
@@ -92,11 +97,12 @@ header{width:100%;max-width:380px;display:flex;align-items:center;
 
 /* LOG */
 .log-card{width:100%;max-width:380px;background:var(--surface);border:1px solid var(--border);
-  border-radius:14px;margin-top:12px;overflow:hidden}
+  border-radius:14px;margin-top:12px;overflow:hidden;flex-shrink:0}
 .log-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;
   border-bottom:1px solid var(--border);font-family:monospace;font-size:10px;
   letter-spacing:0.18em;color:var(--muted);text-transform:uppercase}
-#log{padding:10px 12px 12px;max-height:140px;overflow-y:auto;display:flex;flex-direction:column;gap:4px}
+#log{padding:10px 12px 12px;height:120px;max-height:120px;overflow-y:auto;
+  display:flex;flex-direction:column;gap:4px}
 .log-entry{font-family:monospace;font-size:11px;color:var(--muted);display:flex;gap:8px}
 .log-time{color:#8a8ab0;font-weight:600;flex-shrink:0;font-size:10px}
 .log-entry.ok .log-msg{color:var(--success)}
