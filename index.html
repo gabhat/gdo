@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -274,7 +273,7 @@ var CFG = {
 };
 
 try {
-  var saved = localStorage.getItem('gdo_cfg3');
+  var saved = localStorage.getItem('gdo_cfg4');
   if (saved) {
     var s = JSON.parse(saved);
     CFG = Object.assign(CFG, s);
@@ -512,7 +511,7 @@ function saveAndConnect(){
   CFG.user     = document.getElementById('s-user').value.trim();
   CFG.pass     = document.getElementById('s-pass').value;
   try{
-    localStorage.setItem('gdo_cfg3', JSON.stringify(
+    localStorage.setItem('gdo_cfg4', JSON.stringify(
       Object.assign({},CFG,{openWarn:OPEN_WARN_SEC,closeWarn:CLOSE_WARN_SEC})
     ));
   }catch(e){}
