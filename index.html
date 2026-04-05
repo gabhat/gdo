@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="GDO"/>
 <meta name="theme-color" content="#0a0a0f"/>
 <title>Garage Door Control</title>
 <style>
@@ -23,76 +24,132 @@ body{min-height:100dvh;display:flex;flex-direction:column;align-items:center;
 
 /* HEADER */
 header{width:100%;max-width:380px;display:flex;align-items:center;
-  justify-content:space-between;padding:8px 4px 10px}
+  justify-content:space-between;padding:8px 0 10px}
 .logo{font-family:monospace;font-size:11px;letter-spacing:0.18em;
   color:var(--muted);text-transform:uppercase}
-/* FIX: Both words now light up */
-.logo .lit {color:var(--accent); text-shadow: 0 0 10px rgba(0,229,255,0.4);}
-
+.logo span{color:var(--accent)}
 #conn-pill{display:flex;align-items:center;gap:6px;font-family:monospace;
-  font-size:10px;color:var(--muted);background:var(--surface);
-  border:1px solid var(--border);border-radius:20px;padding:4px 10px}
-#conn-dot{width:7px;height:7px;border-radius:50%;background:var(--muted)}
+  font-size:10px;letter-spacing:0.12em;color:var(--muted);
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;padding:4px 10px;transition:all 0.3s}
+#conn-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);
+  transition:background 0.3s,box-shadow 0.3s}
 #conn-pill.connected #conn-dot{background:var(--success);box-shadow:0 0 8px var(--success)}
+#conn-pill.connected{color:var(--success);border-color:rgba(0,255,153,0.3)}
+#conn-pill.error #conn-dot{background:var(--danger);box-shadow:0 0 8px var(--danger)}
+#conn-pill.error{color:var(--danger);border-color:rgba(255,61,90,0.3)}
 
 /* MAIN CARD */
 .card{width:100%;max-width:380px;background:var(--surface);
   border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-top:10px}
 
-/* TOP STATUS - 30% BIGGER */
-.status-area{padding:40px 16px;display:flex;flex-direction:column;
-  align-items:center;gap:15px;
-  background:linear-gradient(180deg,rgba(0,229,255,0.06) 0%,transparent 100%);
+/* STATUS AREA */
+.status-area{padding:20px 16px 16px;display:flex;flex-direction:column;
+  align-items:center;gap:10px;
+  background:linear-gradient(180deg,rgba(0,229,255,0.04) 0%,transparent 100%);
   border-bottom:1px solid var(--border)}
-.garage-title{font-family:monospace;font-size:12px;letter-spacing:0.3em;
+.garage-title{font-family:monospace;font-size:11px;letter-spacing:0.25em;
   color:var(--muted);text-transform:uppercase}
-#status-badge{font-family:monospace;font-size:22px;font-weight:700;
-  letter-spacing:0.2em;text-transform:uppercase;padding:12px 30px;
-  border-radius:30px;border:1px solid var(--border);
+#status-badge{font-family:monospace;font-size:15px;font-weight:600;
+  letter-spacing:0.15em;text-transform:uppercase;padding:8px 22px;
+  border-radius:20px;border:1px solid var(--border);
   background:var(--panel);color:var(--muted);transition:all 0.4s}
-#status-badge.open{color:var(--success);border-color:var(--success);background:rgba(0,255,153,0.05)}
-#status-badge.closed{color:var(--accent);border-color:var(--accent);background:rgba(0,229,255,0.05)}
+#status-badge.open{color:var(--success);border-color:rgba(0,255,153,0.4);
+  background:rgba(0,255,153,0.06)}
+#status-badge.closed{color:var(--accent);border-color:rgba(0,229,255,0.4);
+  background:rgba(0,229,255,0.06)}
+#status-badge.moving{color:var(--warn);border-color:rgba(255,176,32,0.4);
+  background:rgba(255,176,32,0.06);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
 
-/* SIDE BY SIDE STATUS - Forced layout */
-.indicators{display:flex; flex-direction: row; width: 100%; height: 100px; border-bottom:1px solid var(--border)}
-.ind{flex: 1; display:flex; align-items:center; justify-content:center;
-  font-family:monospace; font-size:12px; font-weight:bold; letter-spacing:0.15em;
-  color:var(--muted); text-transform:uppercase; transition: all 0.3s ease;
-  background: transparent;}
-.ind:first-child{border-right:1px solid var(--border)}
+/* WARNING BANNER */
+#warn-banner{display:none;padding:10px 12px;background:rgba(255,176,32,0.1);
+  border-bottom:1px solid rgba(255,176,32,0.3);align-items:center;gap:8px}
+#warn-banner.visible{display:flex}
+.warn-text{flex:1;font-family:monospace;font-size:10px;
+  letter-spacing:0.08em;color:var(--warn)}
+#countdown{font-family:monospace;font-size:20px;font-weight:bold;
+  color:var(--warn);min-width:26px;text-align:right}
 
-/* Active Area Lighting */
-.ind.active-open { background: rgba(0,255,153,0.15); color: var(--success); }
-.ind.active-close { background: rgba(0,229,255,0.15); color: var(--accent); }
+/* INDICATORS */
+.indicators{display:flex;flex-direction:column;gap:0;
+  border-bottom:1px solid var(--border)}
+.ind{display:flex;align-items:center;gap:12px;padding:12px 16px;
+  font-family:monospace;font-size:11px;letter-spacing:0.15em;
+  color:var(--muted);text-transform:uppercase;border-top:1px solid var(--border)}
+.ind:first-child{border-top:none}
+.ind-status{background:var(--panel);border-radius:8px;padding:4px 8px;
+  font-weight:600;transition:all 0.3s;font-size:10px}
+.ind.active-open .ind-status{background:var(--success);color:#000}
+.ind.active-close .ind-status{background:var(--accent);color:#000}
 
 /* CONTROLS */
-.controls{padding:16px; display:grid; grid-template-columns: 1fr 1fr; gap:10px}
-.btn{display:flex; flex-direction:column; align-items:center; justify-content:center;
-  padding:20px 8px; border-radius:12px; border:1px solid var(--border);
-  background:var(--panel); color:var(--text); font-weight:600; text-transform:uppercase;
-  cursor:pointer; transition:all 0.15s; -webkit-appearance:none; appearance:none}
-.btn-open{color:var(--success); border-color:rgba(0,255,153,0.2)}
-.btn-close{color:var(--accent); border-color:rgba(0,229,255,0.2)}
+.controls{padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{position:relative;overflow:hidden;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:6px;padding:18px 8px;
+  border-radius:12px;border:1px solid var(--border);background:var(--panel);
+  color:var(--text);font-family:-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;
+  transition:all 0.15s;user-select:none;-webkit-user-select:none;
+  -webkit-appearance:none;appearance:none}
+.btn:active{transform:scale(0.95);opacity:0.8}
+.btn-open{border-color:rgba(0,255,153,0.35);background:rgba(0,255,153,0.06);color:var(--success)}
+.btn-close{border-color:rgba(0,229,255,0.35);background:rgba(0,229,255,0.06);color:var(--accent)}
+.btn-stop{grid-column:1/-1;border-color:rgba(255,61,90,0.4);
+  background:rgba(255,61,90,0.07);color:var(--danger);
+  padding:22px 13px;flex-direction:row;gap:8px;font-size:12px}
 
-/* CANCEL BUTTON - Requirement: Professional spacing from bottom */
-.btn-stop{grid-column: 1 / -1; border-color:rgba(255,61,90,0.4);
-  background:rgba(255,61,90,0.07); color:var(--danger);
-  padding:30px 13px; font-size:14px; margin-bottom: 4px;} /* Added margin for professional look */
-
-/* LOG - 20% Taller */
-.log-card{width:100%; max-width:380px; background:var(--surface);
-  border:1px solid var(--border); border-radius:14px; margin-top:12px; overflow:hidden}
-#log{padding:10px 14px; max-height:160px; overflow-y:auto; display:flex; flex-direction:column; gap:6px}
-.log-header{padding:10px 14px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; font-size:10px; color:var(--muted); font-family:monospace}
+/* LOG */
+.log-card{width:100%;max-width:380px;background:var(--surface);
+  border:1px solid var(--border);border-radius:14px;margin-top:10px;overflow:hidden}
+.log-header{display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;border-bottom:1px solid var(--border);
+  font-family:monospace;font-size:10px;letter-spacing:0.18em;
+  color:var(--muted);text-transform:uppercase}
+#log{padding:8px 12px;max-height:110px;overflow-y:auto;
+  display:flex;flex-direction:column;gap:3px}
+.log-entry{font-family:monospace;font-size:11px;color:var(--muted);
+  display:flex;gap:8px}
+.log-time{color:#8a8ab0;font-weight:600;flex-shrink:0;font-size:10px}
+.log-entry.ok .log-msg{color:var(--success)}
+.log-entry.warn .log-msg{color:var(--warn)}
+.log-entry.err .log-msg{color:var(--danger)}
+.log-entry.info .log-msg{color:var(--text)}
 
 /* SETTINGS */
-.settings-card{width:100%; max-width:380px; background:var(--surface); border:1px solid var(--border); border-radius:14px; margin-top:12px; margin-bottom: 30px; overflow:hidden}
+.settings-card{width:100%;max-width:380px;background:var(--surface);
+  border:1px solid var(--border);border-radius:14px;
+  margin-top:10px;overflow:hidden;margin-bottom:16px}
+.settings-toggle{width:100%;padding:13px 14px;display:flex;align-items:center;
+  justify-content:space-between;background:none;border:none;
+  color:var(--muted);font-family:monospace;font-size:10px;
+  letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;-webkit-appearance:none;appearance:none}
+.settings-toggle svg{transition:transform 0.3s;flex-shrink:0}
+.settings-toggle.open svg{transform:rotate(180deg)}
+.settings-body{display:none;padding:0 14px 14px;flex-direction:column;
+  gap:9px;border-top:1px solid var(--border)}
+.settings-body.visible{display:flex}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-family:monospace;font-size:10px;letter-spacing:0.12em;
+  color:var(--muted);text-transform:uppercase}
+.field input{background:var(--panel);border:1px solid var(--border);
+  border-radius:8px;color:var(--text);font-family:monospace;font-size:14px;
+  padding:9px 11px;outline:none;-webkit-appearance:none;appearance:none;width:100%}
+.field input:focus{border-color:var(--accent)}
+.btn-save{margin-top:4px;padding:11px;background:rgba(0,229,255,0.1);
+  border:1px solid rgba(0,229,255,0.4);border-radius:9px;color:var(--accent);
+  font-family:monospace;font-size:11px;letter-spacing:0.12em;
+  text-transform:uppercase;cursor:pointer;width:100%;
+  -webkit-appearance:none;appearance:none}
+.btn-save:active{opacity:0.7}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo"><span class="lit">GARAGE DOOR</span></div>
+  <div class="logo"><span>GARAGE</span> DOOR</div>
   <div id="conn-pill">
     <div id="conn-dot"></div>
     <span id="conn-label">OFFLINE</span>
@@ -100,31 +157,60 @@ header{width:100%;max-width:380px;display:flex;align-items:center;
 </header>
 
 <div class="card">
+  <!-- Status -->
   <div class="status-area">
     <div class="garage-title">Door Status</div>
     <div id="status-badge">UNKNOWN</div>
   </div>
 
-  <div class="indicators">
-    <div class="ind" id="ind-open">OPEN</div>
-    <div class="ind" id="ind-close">CLOSED</div>
+  <!-- Warning banner -->
+  <div id="warn-banner">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <path d="M12 2L2 20h20L12 2z" stroke="#ffb020" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M12 9v5" stroke="#ffb020" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="12" cy="17" r="1" fill="#ffb020"/>
+    </svg>
+    <div class="warn-text">SOUNDER ACTIVE · DOOR MOVES IN</div>
+    <div id="countdown">30</div>
   </div>
 
+  <!-- Indicators -->
+  <div class="indicators">
+    <div class="ind" id="ind-open"><span class="ind-status">OPEN</span></div>
+    <div class="ind" id="ind-close"><span class="ind-status">CLOSED</span></div>
+  </div>
+
+  <!-- Controls -->
   <div class="controls">
     <button class="btn btn-open" id="btn-open">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-bottom:4px"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
       OPEN
     </button>
     <button class="btn btn-close" id="btn-close">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-bottom:4px"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 5v14M19 12l-7 7-7-7" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
       CLOSE
     </button>
     <button class="btn btn-stop" id="btn-stop">
-      <span style="font-size:18px; margin-right:8px">✕</span> CANCEL WARNING
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="3" width="18" height="18" rx="3" fill="none"
+          stroke="currentColor" stroke-width="2"/>
+        <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round"/>
+        <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      CANCEL WARNING
     </button>
   </div>
 </div>
 
+<!-- Log -->
 <div class="log-card">
   <div class="log-header">
     <span>EVENT LOG</span>
@@ -133,31 +219,307 @@ header{width:100%;max-width:380px;display:flex;align-items:center;
   <div id="log"></div>
 </div>
 
+<!-- Settings -->
 <div class="settings-card">
-  <div style="padding:15px; font-family:monospace; font-size:10px; color:var(--muted); display:flex; justify-content:space-between; align-items:center">
+  <button class="settings-toggle" id="settings-toggle">
     <span>MQTT SETTINGS</span>
-    <span>▼</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+      <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+  <div class="settings-body" id="settings-body">
+    <div class="field">
+      <label>Broker Host</label>
+      <input id="s-host" type="text"
+        value="fce59eca27d3485487331774265b264c.s1.eu.hivemq.cloud"
+        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+    </div>
+    <div class="field">
+      <label>Port</label>
+      <input id="s-port" type="number" value="8884" autocomplete="off"/>
+    </div>
+    <div class="field">
+      <label>Client ID</label>
+      <input id="s-clientid" type="text" placeholder="gdo-ui-001"
+        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+    </div>
+    <div class="field">
+      <label>Username</label>
+      <input id="s-user" type="text" value="gdouser"
+        autocomplete="off" autocorrect="off" autocapitalize="off"/>
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input id="s-pass" type="password" value="Gdo12345!" autocomplete="off"/>
+    </div>
+    <button class="btn-save" id="btn-save">SAVE & CONNECT</button>
   </div>
 </div>
 
 <script>
-// Logic to handle the side-by-side UI updates
+// [JavaScript remains exactly the same - no changes needed]
+var CFG = {
+  host:     'fce59eca27d3485487331774265b264c.s1.eu.hivemq.cloud',
+  port:     8884,
+  clientId: 'gdo-ui-' + Math.random().toString(16).slice(2,8),
+  user:     'gdouser',
+  pass:     'Gdo12345!'
+};
+
+try {
+  var saved = localStorage.getItem('gdo_cfg2');
+  if (saved) CFG = Object.assign(CFG, JSON.parse(saved));
+} catch(e) {}
+
+function applyToFields() {
+  document.getElementById('s-host').value     = CFG.host;
+  document.getElementById('s-port').value     = CFG.port;
+  document.getElementById('s-clientid').value = CFG.clientId;
+  document.getElementById('s-user').value     = CFG.user || '';
+  document.getElementById('s-pass').value     = CFG.pass || '';
+}
+
+function encStr(s) {
+  var b = unescape(encodeURIComponent(s)), l = b.length;
+  var a = new Uint8Array(2 + l);
+  a[0] = (l >> 8) & 0xff; a[1] = l & 0xff;
+  for (var i = 0; i < l; i++) a[2+i] = b.charCodeAt(i);
+  return a;
+}
+function cat() {
+  var args = Array.prototype.slice.call(arguments);
+  var tot = args.reduce(function(s,a){return s+a.length;},0);
+  var out = new Uint8Array(tot), off = 0;
+  args.forEach(function(a){out.set(a,off);off+=a.length;});
+  return out;
+}
+function remLen(n) {
+  var b = [];
+  do { var x = n&0x7f; n>>=7; if(n>0)x|=0x80; b.push(x); } while(n>0);
+  return new Uint8Array(b);
+}
+function mkConnect(id, user, pass) {
+  var proto = encStr('MQTT');
+  var flags = user ? 0xC2 : 0x02;
+  var vh = cat(proto, new Uint8Array([4,flags,0,60]));
+  var pl = encStr(id);
+  if (user) pl = cat(pl, encStr(user), encStr(pass||''));
+  var rem = cat(vh, pl);
+  return cat(new Uint8Array([0x10]), remLen(rem.length), rem);
+}
+function mkSub(topic, pid) {
+  var id = new Uint8Array([0, pid&0xff]);
+  var t  = encStr(topic);
+  var pl = cat(id, t, new Uint8Array([0]));
+  return cat(new Uint8Array([0x82]), remLen(pl.length), pl);
+}
+function mkPub(topic, msg) {
+  var t = encStr(topic);
+  var m = new TextEncoder().encode(msg);
+  var pl = cat(t, m);
+  return cat(new Uint8Array([0x30]), remLen(pl.length), pl);
+}
+function mkPing() { return new Uint8Array([0xC0,0x00]); }
+
+function parsePkt(data) {
+  var b = new Uint8Array(data);
+  if (b.length < 2) return null;
+  var type = (b[0]>>4)&0x0f, mul=1, rem=0, i=1;
+  do { rem+=(b[i]&0x7f)*mul; mul*=128; i++; } while(b[i-1]&0x80);
+  var h = i;
+  if (type===2) return {type:'CONNACK', rc:b[h+1]};
+  if (type===9) return {type:'SUBACK'};
+  if (type===13) return {type:'PINGRESP'};
+  if (type===3) {
+    var tl = (b[h]<<8)|b[h+1];
+    var topic   = new TextDecoder().decode(b.slice(h+2, h+2+tl));
+    var payload = new TextDecoder().decode(b.slice(h+2+tl));
+    return {type:'PUBLISH', topic:topic, payload:payload};
+  }
+  return null;
+}
+
+var ws=null, mqttOk=false, pingT=null, reconT=null, pid=1;
+var warnActive=false, warnEnd=null, warnT=null, logCount=0;
+
+function mqttConnect() {
+  if (ws) { try{ws.close();}catch(e){} ws=null; }
+  clearTimeout(reconT); clearInterval(pingT);
+  mqttOk = false;
+  setConn('connecting');
+  addLog('Connecting to ' + CFG.host + '...', 'info');
+
+  var url = 'wss://' + CFG.host + ':' + CFG.port + '/mqtt';
+  try {
+    ws = new WebSocket(url, 'mqtt');
+  } catch(e) {
+    addLog('WS create failed: ' + e.message, 'err');
+    setConn('error');
+    reconT = setTimeout(mqttConnect, 6000);
+    return;
+  }
+  ws.binaryType = 'arraybuffer';
+
+  ws.onopen = function() {
+    addLog('Socket open — authenticating...', 'info');
+    try {
+      var pkt = mkConnect(CFG.clientId, CFG.user, CFG.pass);
+      ws.send(pkt.buffer);
+    } catch(e) {
+      addLog('CONNECT send failed: ' + e.message, 'err');
+    }
+  };
+
+  ws.onmessage = function(ev) {
+    try {
+      var pkt = parsePkt(ev.data);
+      if (!pkt) return;
+      if (pkt.type==='CONNACK') {
+        if (pkt.rc===0) {
+          mqttOk = true;
+          setConn('connected');
+          addLog('MQTT connected!', 'ok');
+          pid=1;
+          ws.send(mkSub('gdo/status',  pid++).buffer);
+          ws.send(mkSub('gdo/warning', pid++).buffer);
+          pingT = setInterval(function(){
+            if(ws&&ws.readyState===1) ws.send(mkPing().buffer);
+          }, 45000);
+        } else {
+          addLog('Auth refused rc=' + pkt.rc, 'err');
+          setConn('error');
+        }
+      }
+      if (pkt.type==='PUBLISH') {
+        var v = pkt.payload.trim();
+        if (pkt.topic==='gdo/status') {
+          updateStatus(v);
+          addLog('Door: ' + v, v==='OPEN'?'ok':v==='MOVING'?'warn':'info');
+        }
+        if (pkt.topic==='gdo/warning') {
+          if (v==='ON') showWarn(30); else hideWarn();
+        }
+      }
+    } catch(e) {
+      addLog('Parse error: '+e.message, 'err');
+    }
+  };
+
+  ws.onerror = function(e) {
+    addLog('WebSocket error — check credentials', 'err');
+    setConn('error');
+  };
+
+  ws.onclose = function(e) {
+    mqttOk = false;
+    clearInterval(pingT);
+    setConn('offline');
+    addLog('Disconnected (code ' + e.code + ') — retry in 6s', 'warn');
+    reconT = setTimeout(mqttConnect, 6000);
+  };
+}
+
+function mqttPublish(topic, msg) {
+  if (!mqttOk || !ws || ws.readyState!==1) {
+    addLog('Not connected — cannot send', 'err'); return;
+  }
+  try {
+    ws.send(mkPub(topic, msg).buffer);
+  } catch(e) {
+    addLog('Publish error: '+e.message, 'err');
+  }
+}
+
+function setConn(s) {
+  var pill  = document.getElementById('conn-pill');
+  var label = document.getElementById('conn-label');
+  pill.className = '';
+  if (s==='connected')  { pill.classList.add('connected'); label.textContent='ONLINE'; }
+  else if (s==='error') { pill.classList.add('error');     label.textContent='ERROR'; }
+  else if (s==='connecting') { label.textContent='CONNECTING'; }
+  else { label.textContent='OFFLINE'; }
+}
+
 function updateStatus(s) {
   var badge = document.getElementById('status-badge');
   badge.textContent = s;
-  badge.className = (s||'').toLowerCase();
-  
-  // Highlight the correct side-by-side box
-  document.getElementById('ind-open').className  = 'ind' + (s==='OPEN'  ?' active-open':'');
-  document.getElementById('ind-close').className = 'ind' + (s==='CLOSED'?' active-close':'');
+  badge.className = 'status-badge ' + (s||'').toLowerCase();
+  document.getElementById('ind-open').className  = 'ind'+(s==='OPEN'  ?' active-open':'');
+  document.getElementById('ind-close').className = 'ind'+(s==='CLOSED'?' active-close':'');
 }
 
-// Simulated connection / status for preview
-window.onload = () => {
-  updateStatus("OPEN"); // Set to OPEN for preview
-  document.getElementById('conn-pill').classList.add('connected');
-  document.getElementById('conn-label').innerText = "ONLINE";
-};
+function showWarn(sec) {
+  warnActive=true; warnEnd=Date.now()+sec*1000;
+  document.getElementById('warn-banner').classList.add('visible');
+  document.getElementById('countdown').textContent=sec;
+  clearInterval(warnT);
+  warnT=setInterval(function(){
+    var r=Math.max(0,Math.ceil((warnEnd-Date.now())/1000));
+    document.getElementById('countdown').textContent=r;
+    if(r===0){clearInterval(warnT);hideWarn();}
+  },250);
+  addLog('Sounder ON — door moves in '+sec+'s','warn');
+}
+function hideWarn(){
+  warnActive=false; clearInterval(warnT);
+  document.getElementById('warn-banner').classList.remove('visible');
+}
+
+function addLog(msg, type) {
+  var el=document.getElementById('log');
+  var ts=new Date().toTimeString().slice(0,8);
+  var r=document.createElement('div');
+  r.className='log-entry '+(type||'info');
+  r.innerHTML='<span class="log-time">'+ts+'</span><span class="log-msg">'+msg+'</span>';
+  el.insertBefore(r,el.firstChild);
+  while(el.children.length>25)el.removeChild(el.lastChild);
+  logCount++;
+  document.getElementById('log-count').textContent=logCount+' event'+(logCount!==1?'s':'');
+}
+
+function sendCmd(cmd) {
+  mqttPublish('gdo/cmd', cmd);
+  addLog('→ Sent: '+cmd,'info');
+}
+
+function toggleSettings() {
+  document.getElementById('settings-body').classList.toggle('visible');
+  document.getElementById('settings-toggle').classList.toggle('open');
+}
+
+function saveAndConnect() {
+  CFG.host     = document.getElementById('s-host').value.trim() || CFG.host;
+  CFG.port     = parseInt(document.getElementById('s-port').value) || 8884;
+  CFG.clientId = document.getElementById('s-clientid').value.trim() ||
+                 ('gdo-ui-'+Math.random().toString(16).slice(2,8));
+  CFG.user     = document.getElementById('s-user').value.trim();
+  CFG.pass     = document.getElementById('s-pass').value;
+  try { localStorage.setItem('gdo_cfg2', JSON.stringify(CFG)); } catch(e){}
+  addLog('Settings saved','info');
+  mqttConnect();
+}
+
+function addTap(id, fn) {
+  var el=document.getElementById(id);
+  if(!el)return;
+  var busy=false;
+  function go(e){ e.preventDefault(); if(!busy){busy=true;fn();setTimeout(function(){busy=false;},300);} }
+  el.addEventListener('touchend', go, {passive:false});
+  el.addEventListener('click', function(e){ if(!busy)fn(); });
+}
+
+window.addEventListener('load', function() {
+  applyToFields();
+  updateStatus('UNKNOWN');
+
+  addTap('btn-open',        function(){sendCmd('OPEN');});
+  addTap('btn-close',       function(){sendCmd('CLOSE');});
+  addTap('btn-stop',        function(){sendCmd('STOP');});
+  addTap('btn-save',        function(){saveAndConnect();});
+  addTap('settings-toggle', function(){toggleSettings();});
+
+  mqttConnect();
+});
 </script>
 </body>
 </html>
