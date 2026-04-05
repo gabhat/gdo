@@ -23,11 +23,11 @@ body{min-height:100dvh;display:flex;flex-direction:column;align-items:center;
 
 /* HEADER */
 header{width:100%;max-width:380px;display:flex;align-items:center;
-  justify-content:space-between;padding:8px 0 10px}
+  justify-content:space-between;padding:8px 4px 10px}
 .logo{font-family:monospace;font-size:11px;letter-spacing:0.18em;
   color:var(--muted);text-transform:uppercase}
-/* Fixed: Ensuring the entire span lights up */
-.logo span{color:var(--accent); text-shadow: 0 0 12px rgba(0,229,255,0.5);}
+/* FIX: Both words now light up */
+.logo .lit {color:var(--accent); text-shadow: 0 0 10px rgba(0,229,255,0.4);}
 
 #conn-pill{display:flex;align-items:center;gap:6px;font-family:monospace;
   font-size:10px;color:var(--muted);background:var(--surface);
@@ -37,72 +37,72 @@ header{width:100%;max-width:380px;display:flex;align-items:center;
 
 /* MAIN CARD */
 .card{width:100%;max-width:380px;background:var(--surface);
-  border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-top:10px;
-  display: flex; flex-direction: column;}
+  border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-top:10px}
 
-/* TOP WINDOW - 30% BIGGER */
-.status-area{padding:45px 16px 35px;display:flex;flex-direction:column;
-  align-items:center;gap:18px;
+/* TOP STATUS - 30% BIGGER */
+.status-area{padding:40px 16px;display:flex;flex-direction:column;
+  align-items:center;gap:15px;
   background:linear-gradient(180deg,rgba(0,229,255,0.06) 0%,transparent 100%);
   border-bottom:1px solid var(--border)}
-.garage-title{font-family:monospace;font-size:13px;letter-spacing:0.3em;
+.garage-title{font-family:monospace;font-size:12px;letter-spacing:0.3em;
   color:var(--muted);text-transform:uppercase}
-#status-badge{font-family:monospace;font-size:24px;font-weight:700;
-  letter-spacing:0.2em;text-transform:uppercase;padding:14px 40px;
+#status-badge{font-family:monospace;font-size:22px;font-weight:700;
+  letter-spacing:0.2em;text-transform:uppercase;padding:12px 30px;
   border-radius:30px;border:1px solid var(--border);
   background:var(--panel);color:var(--muted);transition:all 0.4s}
-#status-badge.open{color:var(--success);border-color:var(--success);background:rgba(0,255,153,0.1)}
-#status-badge.closed{color:var(--accent);border-color:var(--accent);background:rgba(0,229,255,0.1)}
+#status-badge.open{color:var(--success);border-color:var(--success);background:rgba(0,255,153,0.05)}
+#status-badge.closed{color:var(--accent);border-color:var(--accent);background:rgba(0,229,255,0.05)}
 
-/* SIDE-BY-SIDE STATUS BOXES - Twice as high */
-.indicators{display:flex; width: 100%; height: 120px; border-bottom:1px solid var(--border)}
-.ind{flex: 1; width: 50%; display:flex; align-items:center; justify-content:center;
-  font-family:monospace; font-size:13px; font-weight:bold; letter-spacing:0.2em;
-  color:var(--muted); text-transform:uppercase; transition: all 0.4s ease;}
+/* SIDE BY SIDE STATUS - Forced layout */
+.indicators{display:flex; flex-direction: row; width: 100%; height: 100px; border-bottom:1px solid var(--border)}
+.ind{flex: 1; display:flex; align-items:center; justify-content:center;
+  font-family:monospace; font-size:12px; font-weight:bold; letter-spacing:0.15em;
+  color:var(--muted); text-transform:uppercase; transition: all 0.3s ease;
+  background: transparent;}
 .ind:first-child{border-right:1px solid var(--border)}
 
-/* Indicator Lighting */
-.ind.active-open { background: rgba(0,255,153,0.2); color: var(--success); box-shadow: inset 0 0 40px rgba(0,255,153,0.1); }
-.ind.active-close { background: rgba(0,229,255,0.2); color: var(--accent); box-shadow: inset 0 0 40px rgba(0,229,255,0.1); }
+/* Active Area Lighting */
+.ind.active-open { background: rgba(0,255,153,0.15); color: var(--success); }
+.ind.active-close { background: rgba(0,229,255,0.15); color: var(--accent); }
 
-/* CONTROLS - Adjusted padding so Cancel touches the bottom edge */
-.controls{padding:16px 16px 0 16px; display:grid; grid-template-columns: 1fr 1fr; gap:10px}
+/* CONTROLS */
+.controls{padding:16px; display:grid; grid-template-columns: 1fr 1fr; gap:10px}
 .btn{display:flex; flex-direction:column; align-items:center; justify-content:center;
-  padding:22px 8px; border-radius:12px; border:1px solid var(--border);
+  padding:20px 8px; border-radius:12px; border:1px solid var(--border);
   background:var(--panel); color:var(--text); font-weight:600; text-transform:uppercase;
   cursor:pointer; transition:all 0.15s; -webkit-appearance:none; appearance:none}
 .btn-open{color:var(--success); border-color:rgba(0,255,153,0.2)}
 .btn-close{color:var(--accent); border-color:rgba(0,229,255,0.2)}
 
-/* CANCEL BUTTON - Flush with bottom border */
+/* CANCEL BUTTON - Requirement: Professional spacing from bottom */
 .btn-stop{grid-column: 1 / -1; border-color:rgba(255,61,90,0.4);
   background:rgba(255,61,90,0.07); color:var(--danger);
-  padding:38px 13px; font-size:14px; margin-top:10px;
-  border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: none;}
+  padding:30px 13px; font-size:14px; margin-bottom: 4px;} /* Added margin for professional look */
 
 /* LOG - 20% Taller */
 .log-card{width:100%; max-width:380px; background:var(--surface);
-  border:1px solid var(--border); border-radius:14px; margin-top:10px; overflow:hidden}
-#log{padding:10px 14px; max-height:165px; overflow-y:auto; display:flex; flex-direction:column; gap:6px}
+  border:1px solid var(--border); border-radius:14px; margin-top:12px; overflow:hidden}
+#log{padding:10px 14px; max-height:160px; overflow-y:auto; display:flex; flex-direction:column; gap:6px}
+.log-header{padding:10px 14px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; font-size:10px; color:var(--muted); font-family:monospace}
 
-/* WARNING BOX */
-#warn-banner{display:none; padding:15px; background:rgba(255,176,32,0.1); border-bottom:1px solid var(--warn); align-items:center; gap:10px;}
+/* SETTINGS */
+.settings-card{width:100%; max-width:380px; background:var(--surface); border:1px solid var(--border); border-radius:14px; margin-top:12px; margin-bottom: 30px; overflow:hidden}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo"><span>GARAGE DOOR</span></div>
-  <div id="conn-pill" class="connected">
+  <div class="logo"><span class="lit">GARAGE DOOR</span></div>
+  <div id="conn-pill">
     <div id="conn-dot"></div>
-    <span id="conn-label">ONLINE</span>
+    <span id="conn-label">OFFLINE</span>
   </div>
 </header>
 
 <div class="card">
   <div class="status-area">
     <div class="garage-title">Door Status</div>
-    <div id="status-badge" class="closed">CLOSED</div>
+    <div id="status-badge">UNKNOWN</div>
   </div>
 
   <div class="indicators">
@@ -111,31 +111,53 @@ header{width:100%;max-width:380px;display:flex;align-items:center;
   </div>
 
   <div class="controls">
-    <button class="btn btn-open">OPEN</button>
-    <button class="btn btn-close">CLOSE</button>
-    <button class="btn btn-stop">CANCEL WARNING</button>
+    <button class="btn btn-open" id="btn-open">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-bottom:4px"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+      OPEN
+    </button>
+    <button class="btn btn-close" id="btn-close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-bottom:4px"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+      CLOSE
+    </button>
+    <button class="btn btn-stop" id="btn-stop">
+      <span style="font-size:18px; margin-right:8px">✕</span> CANCEL WARNING
+    </button>
   </div>
 </div>
 
 <div class="log-card">
-  <div style="padding:12px; border-bottom:1px solid var(--border); font-size:10px; color:var(--muted); display:flex; justify-content:space-between">
+  <div class="log-header">
     <span>EVENT LOG</span>
-    <span id="log-count">3 events</span>
+    <span id="log-count">0 events</span>
   </div>
-  <div id="log">
-    <div style="font-family:monospace; font-size:11px; display:flex; gap:10px;"><span style="color:var(--muted)">21:05</span><span style="color:var(--success)">Door Closed</span></div>
-    <div style="font-family:monospace; font-size:11px; display:flex; gap:10px;"><span style="color:var(--muted)">21:04</span><span style="color:var(--text)">User: Close Cmd</span></div>
-    <div style="font-family:monospace; font-size:11px; display:flex; gap:10px;"><span style="color:var(--muted)">21:00</span><span style="color:var(--text)">System Online</span></div>
+  <div id="log"></div>
+</div>
+
+<div class="settings-card">
+  <div style="padding:15px; font-family:monospace; font-size:10px; color:var(--muted); display:flex; justify-content:space-between; align-items:center">
+    <span>MQTT SETTINGS</span>
+    <span>▼</span>
   </div>
 </div>
 
 <script>
-// Mock Logic for demonstration
-window.addEventListener('load', function() {
-  const status = "CLOSED"; // Change to "OPEN" to see toggle
-  document.getElementById('ind-open').className  = 'ind' + (status==='OPEN'  ?' active-open':'');
-  document.getElementById('ind-close').className = 'ind' + (status==='CLOSED'?' active-close':'');
-});
+// Logic to handle the side-by-side UI updates
+function updateStatus(s) {
+  var badge = document.getElementById('status-badge');
+  badge.textContent = s;
+  badge.className = (s||'').toLowerCase();
+  
+  // Highlight the correct side-by-side box
+  document.getElementById('ind-open').className  = 'ind' + (s==='OPEN'  ?' active-open':'');
+  document.getElementById('ind-close').className = 'ind' + (s==='CLOSED'?' active-close':'');
+}
+
+// Simulated connection / status for preview
+window.onload = () => {
+  updateStatus("OPEN"); // Set to OPEN for preview
+  document.getElementById('conn-pill').classList.add('connected');
+  document.getElementById('conn-label').innerText = "ONLINE";
+};
 </script>
 </body>
 </html>
