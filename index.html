@@ -278,25 +278,11 @@ var CFG = {
   pass:     'Gdo12345!'
 };
 
-try {
-  var saved = localStorage.getItem('gdo_cfg5');
-  if (saved) {
-    var s = JSON.parse(saved);
-    CFG = Object.assign(CFG, s);
-    if (s.openWarn  !== undefined) OPEN_WARN_SEC  = s.openWarn;
-    if (s.closeWarn !== undefined) CLOSE_WARN_SEC = s.closeWarn;
-  }
-} catch(e) {}
+// No localStorage — always read directly from the input fields
+// This avoids stale saved values overriding what you type
 
-function applyToFields() {
-  document.getElementById('s-host').value       = CFG.host;
-  document.getElementById('s-port').value       = CFG.port;
-  document.getElementById('s-clientid').value   = CFG.clientId;
-  document.getElementById('s-user').value       = CFG.user || '';
-  document.getElementById('s-pass').value       = CFG.pass || '';
-  document.getElementById('s-open-warn').value  = OPEN_WARN_SEC;
-  document.getElementById('s-close-warn').value = CLOSE_WARN_SEC;
-}
+// Defaults are set directly in the HTML input fields below
+// No need to apply them from JavaScript
 
 // ── MQTT PACKET HELPERS ───────────────────────────────────────
 function encStr(s) {
@@ -510,21 +496,14 @@ function toggleSettings(){
 function saveAndConnect(){
   var openVal  = parseInt(document.getElementById('s-open-warn').value);
   var closeVal = parseInt(document.getElementById('s-close-warn').value);
-  console.log('Raw input values — open:', openVal, 'close:', closeVal);
   OPEN_WARN_SEC  = isNaN(openVal)  ? 5  : Math.max(0, openVal);
   CLOSE_WARN_SEC = isNaN(closeVal) ? 30 : Math.max(1, closeVal);
-  console.log('Saved values — open:', OPEN_WARN_SEC, 'close:', CLOSE_WARN_SEC);
   CFG.host     = document.getElementById('s-host').value.trim()     || CFG.host;
   CFG.port     = parseInt(document.getElementById('s-port').value)  || 8884;
   CFG.clientId = document.getElementById('s-clientid').value.trim() ||
                  ('gdo-ui-'+Math.random().toString(16).slice(2,8));
   CFG.user     = document.getElementById('s-user').value.trim();
   CFG.pass     = document.getElementById('s-pass').value;
-  try{
-    localStorage.setItem('gdo_cfg5', JSON.stringify(
-      Object.assign({},CFG,{openWarn:OPEN_WARN_SEC,closeWarn:CLOSE_WARN_SEC})
-    ));
-  }catch(e){}
   addLog('Saved: OPEN='+OPEN_WARN_SEC+'s CLOSE='+CLOSE_WARN_SEC+'s','ok');
   mqttConnect();
 }
@@ -544,7 +523,6 @@ function addTap(id,fn){
 
 // ── INIT ──────────────────────────────────────────────────────
 window.addEventListener('load',function(){
-  applyToFields();
   updateStatus('UNKNOWN');
   addTap('btn-open',        function(){sendCmd('OPEN');});
   addTap('btn-close',       function(){sendCmd('CLOSE');});
