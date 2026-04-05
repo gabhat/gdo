@@ -279,7 +279,7 @@ var CFG = {
 };
 
 try {
-  var saved = localStorage.getItem('gdo_cfg4');
+  var saved = localStorage.getItem('gdo_cfg5');
   if (saved) {
     var s = JSON.parse(saved);
     CFG = Object.assign(CFG, s);
@@ -510,8 +510,10 @@ function toggleSettings(){
 function saveAndConnect(){
   var openVal  = parseInt(document.getElementById('s-open-warn').value);
   var closeVal = parseInt(document.getElementById('s-close-warn').value);
+  console.log('Raw input values — open:', openVal, 'close:', closeVal);
   OPEN_WARN_SEC  = isNaN(openVal)  ? 5  : Math.max(0, openVal);
   CLOSE_WARN_SEC = isNaN(closeVal) ? 30 : Math.max(1, closeVal);
+  console.log('Saved values — open:', OPEN_WARN_SEC, 'close:', CLOSE_WARN_SEC);
   CFG.host     = document.getElementById('s-host').value.trim()     || CFG.host;
   CFG.port     = parseInt(document.getElementById('s-port').value)  || 8884;
   CFG.clientId = document.getElementById('s-clientid').value.trim() ||
@@ -519,7 +521,7 @@ function saveAndConnect(){
   CFG.user     = document.getElementById('s-user').value.trim();
   CFG.pass     = document.getElementById('s-pass').value;
   try{
-    localStorage.setItem('gdo_cfg4', JSON.stringify(
+    localStorage.setItem('gdo_cfg5', JSON.stringify(
       Object.assign({},CFG,{openWarn:OPEN_WARN_SEC,closeWarn:CLOSE_WARN_SEC})
     ));
   }catch(e){}
