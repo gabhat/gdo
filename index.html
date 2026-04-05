@@ -46,7 +46,7 @@ header{width:100%;max-width:380px;display:flex;align-items:center;
   gap:14px;background:linear-gradient(180deg,rgba(0,229,255,0.04) 0%,transparent 100%);
   border-bottom:1px solid var(--border)}
 .garage-title{font-family:monospace;font-size:11px;letter-spacing:0.25em;
-  color:var(--muted);text-transform:uppercase}
+  color:#8a8ab0;text-transform:uppercase}
 .garage-title .lit{color:var(--accent);text-shadow:0 0 10px rgba(0,229,255,0.45)}
 #status-badge{font-family:monospace;font-size:20px;font-weight:700;letter-spacing:0.16em;
   text-transform:uppercase;padding:14px 32px;border-radius:24px;border:2px solid var(--border);
@@ -508,8 +508,10 @@ function toggleSettings(){
 }
 
 function saveAndConnect(){
-  OPEN_WARN_SEC  = Math.max(0, parseInt(document.getElementById('s-open-warn').value)  || 5);
-  CLOSE_WARN_SEC = Math.max(5, parseInt(document.getElementById('s-close-warn').value) || 30);
+  var openVal  = parseInt(document.getElementById('s-open-warn').value);
+  var closeVal = parseInt(document.getElementById('s-close-warn').value);
+  OPEN_WARN_SEC  = isNaN(openVal)  ? 5  : Math.max(0, openVal);
+  CLOSE_WARN_SEC = isNaN(closeVal) ? 30 : Math.max(1, closeVal);
   CFG.host     = document.getElementById('s-host').value.trim()     || CFG.host;
   CFG.port     = parseInt(document.getElementById('s-port').value)  || 8884;
   CFG.clientId = document.getElementById('s-clientid').value.trim() ||
