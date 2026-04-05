@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,343 +20,117 @@ html,body{height:100%;background:var(--bg);color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;
   -webkit-font-smoothing:antialiased;overflow-x:hidden}
 body{
-  min-height:100dvh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
+  min-height:100dvh;display:flex;flex-direction:column;align-items:center;
   justify-content:flex-start;
   padding:max(env(safe-area-inset-top),12px) 8px max(env(safe-area-inset-bottom),12px);
   background-image:radial-gradient(ellipse 80% 40% at 50% -10%,rgba(0,229,255,0.07) 0%,transparent 70%)
 }
-
-/* HEADER */
-header{
-  width:100%;
-  max-width:380px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:8px 0 14px
-}
-.logo{
-  font-family:monospace;
-  font-size:11px;
-  letter-spacing:0.18em;
-  color:var(--accent);
-  text-transform:uppercase
-}
-.logo span{
-  color:var(--accent);
-  text-shadow:0 0 10px rgba(0,229,255,0.45)
-}
-#conn-pill{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  font-family:monospace;
-  font-size:10px;
-  letter-spacing:0.12em;
-  color:var(--muted);
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:4px 10px;
-  transition:all 0.3s
-}
-#conn-dot{
-  width:7px;height:7px;border-radius:50%;
-  background:var(--muted);
-  transition:background 0.3s,box-shadow 0.3s
-}
-#conn-pill.connected #conn-dot{
-  background:var(--success);
-  box-shadow:0 0 8px var(--success)
-}
-#conn-pill.connected{
-  color:var(--success);
-  border-color:rgba(0,255,153,0.3)
-}
-#conn-pill.error #conn-dot{
-  background:var(--danger);
-  box-shadow:0 0 8px var(--danger)
-}
-#conn-pill.error{
-  color:var(--danger);
-  border-color:rgba(255,61,90,0.3)
-}
-
-/* MAIN CARD */
-.card{
-  width:100%;
-  max-width:380px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:18px;
-  overflow:hidden;
-  margin-top:10px
-}
-
-/* STATUS AREA */
-.status-area{
-  padding:30px 16px 24px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:14px;
-  background:linear-gradient(180deg,rgba(0,229,255,0.04) 0%,transparent 100%);
-  border-bottom:1px solid var(--border)
-}
-.garage-title{
-  font-family:monospace;
-  font-size:11px;
-  letter-spacing:0.25em;
-  color:var(--muted);
-  text-transform:uppercase
-}
-.garage-title .lit{
-  color:var(--accent);
-  text-shadow:0 0 10px rgba(0,229,255,0.45)
-}
-#status-badge{
-  font-family:monospace;
-  font-size:18px;
-  font-weight:700;
-  letter-spacing:0.16em;
-  text-transform:uppercase;
-  padding:14px 28px;
-  border-radius:24px;
-  border:1px solid var(--border);
-  background:var(--panel);
-  color:var(--muted);
-  transition:all 0.4s
-}
-#status-badge.open{
-  color:var(--success);
-  border-color:rgba(0,255,153,0.4);
-  background:rgba(0,255,153,0.06)
-}
-#status-badge.closed{
-  color:var(--accent);
-  border-color:rgba(0,229,255,0.4);
-  background:rgba(0,229,255,0.06)
-}
-#status-badge.moving{
-  color:var(--warn);
-  border-color:rgba(255,176,32,0.4);
-  background:rgba(255,176,32,0.06);
-  animation:pulse 1s infinite
-}
+header{width:100%;max-width:380px;display:flex;align-items:center;
+  justify-content:space-between;padding:8px 0 14px}
+.logo{font-family:monospace;font-size:11px;letter-spacing:0.18em;
+  color:var(--accent);text-transform:uppercase}
+.logo span{color:var(--accent);text-shadow:0 0 10px rgba(0,229,255,0.45)}
+#conn-pill{display:flex;align-items:center;gap:6px;font-family:monospace;
+  font-size:10px;letter-spacing:0.12em;color:var(--muted);background:var(--surface);
+  border:1px solid var(--border);border-radius:20px;padding:4px 10px;transition:all 0.3s}
+#conn-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);
+  transition:background 0.3s,box-shadow 0.3s}
+#conn-pill.connected #conn-dot{background:var(--success);box-shadow:0 0 8px var(--success)}
+#conn-pill.connected{color:var(--success);border-color:rgba(0,255,153,0.3)}
+#conn-pill.error #conn-dot{background:var(--danger);box-shadow:0 0 8px var(--danger)}
+#conn-pill.error{color:var(--danger);border-color:rgba(255,61,90,0.3)}
+.card{width:100%;max-width:380px;background:var(--surface);border:1px solid var(--border);
+  border-radius:18px;overflow:hidden;margin-top:10px}
+.status-area{padding:30px 16px 24px;display:flex;flex-direction:column;align-items:center;
+  gap:14px;background:linear-gradient(180deg,rgba(0,229,255,0.04) 0%,transparent 100%);
+  border-bottom:1px solid var(--border)}
+.garage-title{font-family:monospace;font-size:11px;letter-spacing:0.25em;
+  color:var(--muted);text-transform:uppercase}
+.garage-title .lit{color:var(--accent);text-shadow:0 0 10px rgba(0,229,255,0.45)}
+#status-badge{font-family:monospace;font-size:18px;font-weight:700;letter-spacing:0.16em;
+  text-transform:uppercase;padding:14px 28px;border-radius:24px;border:1px solid var(--border);
+  background:var(--panel);color:var(--muted);transition:all 0.4s}
+#status-badge.open{color:var(--success);border-color:rgba(0,255,153,0.4);background:rgba(0,255,153,0.06)}
+#status-badge.closed{color:var(--accent);border-color:rgba(0,229,255,0.4);background:rgba(0,229,255,0.06)}
+#status-badge.moving{color:var(--warn);border-color:rgba(255,176,32,0.4);
+  background:rgba(255,176,32,0.06);animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
 
 /* WARNING BANNER */
-#warn-banner{
-  display:none;
-  padding:12px 12px;
-  background:rgba(255,176,32,0.1);
-  border-bottom:1px solid rgba(255,176,32,0.3);
-  align-items:center;
-  gap:8px
-}
+#warn-banner{display:none;padding:12px;background:rgba(255,176,32,0.1);
+  border-bottom:1px solid rgba(255,176,32,0.3);align-items:center;gap:8px}
 #warn-banner.visible{display:flex}
-.warn-text{
-  flex:1;
-  font-family:monospace;
-  font-size:10px;
-  letter-spacing:0.08em;
-  color:var(--warn)
-}
-#countdown{
-  font-family:monospace;
-  font-size:20px;
-  font-weight:bold;
-  color:var(--warn);
-  min-width:26px;
-  text-align:right
-}
+#warn-banner.opening{background:rgba(0,255,153,0.08);border-bottom-color:rgba(0,255,153,0.3)}
+.warn-text{flex:1;font-family:monospace;font-size:10px;letter-spacing:0.08em;color:var(--warn)}
+#warn-banner.opening .warn-text{color:var(--success)}
+#countdown{font-family:monospace;font-size:20px;font-weight:bold;
+  color:var(--warn);min-width:26px;text-align:right}
+#warn-banner.opening #countdown{color:var(--success)}
 
-/* CONTROLS */
-.controls{
-  padding:18px 16px 24px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px
-}
-.btn{
-  position:relative;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  min-height:128px;
-  padding:20px 8px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:var(--panel);
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,sans-serif;
-  font-size:13px;
-  font-weight:600;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
-  cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-  transition:all 0.15s;
-  user-select:none;
-  -webkit-user-select:none;
-  -webkit-appearance:none;
-  appearance:none
-}
+/* PROGRESS BAR inside warning banner */
+#warn-progress-wrap{width:100%;margin-top:6px}
+#warn-progress-bg{height:3px;background:rgba(255,176,32,0.2);border-radius:2px;overflow:hidden}
+#warn-banner.opening #warn-progress-bg{background:rgba(0,255,153,0.15)}
+#warn-progress-fill{height:100%;border-radius:2px;background:var(--warn);
+  transition:width 0.25s linear;width:100%}
+#warn-banner.opening #warn-progress-fill{background:var(--success)}
+
+.controls{padding:18px 16px 24px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{position:relative;overflow:hidden;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:8px;min-height:128px;padding:20px 8px;
+  border-radius:14px;border:1px solid var(--border);background:var(--panel);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;font-weight:600;
+  letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;transition:all 0.15s;
+  user-select:none;-webkit-user-select:none;-webkit-appearance:none;appearance:none}
 .btn:active{transform:scale(0.95);opacity:0.8}
-.btn-open{
-  border-color:rgba(0,255,153,0.35);
-  background:rgba(0,255,153,0.06);
-  color:var(--success)
-}
-.btn-close{
-  border-color:rgba(0,229,255,0.35);
-  background:rgba(0,229,255,0.06);
-  color:var(--accent)
-}
-.btn-stop{
-  grid-column:1/-1;
-  min-height:88px;
-  border-color:rgba(255,61,90,0.4);
-  background:rgba(255,61,90,0.07);
-  color:var(--danger);
-  padding:24px 13px;
-  flex-direction:row;
-  gap:10px;
-  font-size:12px
-}
+.btn-open{border-color:rgba(0,255,153,0.35);background:rgba(0,255,153,0.06);color:var(--success)}
+.btn-close{border-color:rgba(0,229,255,0.35);background:rgba(0,229,255,0.06);color:var(--accent)}
+.btn-stop{grid-column:1/-1;min-height:64px;border-color:rgba(255,61,90,0.4);
+  background:rgba(255,61,90,0.07);color:var(--danger);padding:16px 13px;
+  flex-direction:row;gap:10px;font-size:12px}
 
 /* LOG */
-.log-card{
-  width:100%;
-  max-width:380px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:14px;
-  margin-top:12px;
-  overflow:hidden
-}
-.log-header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:10px 14px;
-  border-bottom:1px solid var(--border);
-  font-family:monospace;
-  font-size:10px;
-  letter-spacing:0.18em;
-  color:var(--muted);
-  text-transform:uppercase
-}
-#log{
-  padding:10px 12px 12px;
-  max-height:170px;
-  overflow-y:auto;
-  display:flex;
-  flex-direction:column;
-  gap:4px
-}
-.log-entry{
-  font-family:monospace;
-  font-size:11px;
-  color:var(--muted);
-  display:flex;
-  gap:8px
-}
-.log-time{
-  color:#8a8ab0;
-  font-weight:600;
-  flex-shrink:0;
-  font-size:10px
-}
+.log-card{width:100%;max-width:380px;background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;margin-top:12px;overflow:hidden}
+.log-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;
+  border-bottom:1px solid var(--border);font-family:monospace;font-size:10px;
+  letter-spacing:0.18em;color:var(--muted);text-transform:uppercase}
+#log{padding:10px 12px 12px;max-height:140px;overflow-y:auto;display:flex;flex-direction:column;gap:4px}
+.log-entry{font-family:monospace;font-size:11px;color:var(--muted);display:flex;gap:8px}
+.log-time{color:#8a8ab0;font-weight:600;flex-shrink:0;font-size:10px}
 .log-entry.ok .log-msg{color:var(--success)}
 .log-entry.warn .log-msg{color:var(--warn)}
 .log-entry.err .log-msg{color:var(--danger)}
 .log-entry.info .log-msg{color:var(--text)}
 
 /* SETTINGS */
-.settings-card{
-  width:100%;
-  max-width:380px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:14px;
-  margin-top:12px;
-  overflow:hidden;
-  margin-bottom:16px
-}
-.settings-toggle{
-  width:100%;
-  padding:13px 14px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:none;
-  border:none;
-  color:var(--muted);
-  font-family:monospace;
-  font-size:10px;
-  letter-spacing:0.18em;
-  text-transform:uppercase;
-  cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-  -webkit-appearance:none;
-  appearance:none
-}
+.settings-card{width:100%;max-width:380px;background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;margin-top:12px;overflow:hidden;margin-bottom:16px}
+.settings-toggle{width:100%;padding:13px 14px;display:flex;align-items:center;
+  justify-content:space-between;background:none;border:none;color:var(--muted);
+  font-family:monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;-webkit-appearance:none;appearance:none}
 .settings-toggle svg{transition:transform 0.3s;flex-shrink:0}
 .settings-toggle.open svg{transform:rotate(180deg)}
-.settings-body{
-  display:none;
-  padding:0 14px 14px;
-  flex-direction:column;
-  gap:9px;
-  border-top:1px solid var(--border)
-}
+.settings-body{display:none;padding:0 14px 14px;flex-direction:column;gap:9px;
+  border-top:1px solid var(--border)}
 .settings-body.visible{display:flex}
 .field{display:flex;flex-direction:column;gap:4px}
-.field label{
-  font-family:monospace;
-  font-size:10px;
-  letter-spacing:0.12em;
-  color:var(--muted);
-  text-transform:uppercase
-}
-.field input{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:8px;
-  color:var(--text);
-  font-family:monospace;
-  font-size:14px;
-  padding:9px 11px;
-  outline:none;
-  -webkit-appearance:none;
-  appearance:none;
-  width:100%
-}
+.field label{font-family:monospace;font-size:10px;letter-spacing:0.12em;
+  color:var(--muted);text-transform:uppercase}
+.field input{background:var(--panel);border:1px solid var(--border);border-radius:8px;
+  color:var(--text);font-family:monospace;font-size:14px;padding:9px 11px;outline:none;
+  -webkit-appearance:none;appearance:none;width:100%}
 .field input:focus{border-color:var(--accent)}
-.btn-save{
-  margin-top:4px;
-  padding:11px;
-  background:rgba(0,229,255,0.1);
-  border:1px solid rgba(0,229,255,0.4);
-  border-radius:9px;
-  color:var(--accent);
-  font-family:monospace;
-  font-size:11px;
-  letter-spacing:0.12em;
-  text-transform:uppercase;
-  cursor:pointer;
-  width:100%;
-  -webkit-appearance:none;
-  appearance:none
-}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn-save{margin-top:4px;padding:11px;background:rgba(0,229,255,0.1);
+  border:1px solid rgba(0,229,255,0.4);border-radius:9px;color:var(--accent);
+  font-family:monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  cursor:pointer;width:100%;-webkit-appearance:none;appearance:none}
 .btn-save:active{opacity:0.7}
+.section-divider{font-family:monospace;font-size:9px;letter-spacing:0.2em;
+  color:var(--border);text-transform:uppercase;padding-top:4px;border-top:1px solid var(--border)}
 </style>
 </head>
 <body>
@@ -375,13 +150,22 @@ header{
   </div>
 
   <div id="warn-banner">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-      <path d="M12 2L2 20h20L12 2z" stroke="#ffb020" stroke-width="2" stroke-linejoin="round"/>
-      <path d="M12 9v5" stroke="#ffb020" stroke-width="2" stroke-linecap="round"/>
-      <circle cx="12" cy="17" r="1" fill="#ffb020"/>
-    </svg>
-    <div class="warn-text">SOUNDER ACTIVE · DOOR MOVES IN</div>
-    <div id="countdown">30</div>
+    <div style="width:100%">
+      <div style="display:flex;align-items:center;gap:8px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="flex-shrink:0">
+          <path d="M12 2L2 20h20L12 2z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M12 9v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="12" cy="17" r="1" fill="currentColor"/>
+        </svg>
+        <div class="warn-text" id="warn-text">SOUNDER ACTIVE · DOOR MOVES IN</div>
+        <div id="countdown">30</div>
+      </div>
+      <div id="warn-progress-wrap">
+        <div id="warn-progress-bg" style="margin-top:6px">
+          <div id="warn-progress-fill"></div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="controls">
@@ -423,12 +207,26 @@ header{
 
 <div class="settings-card">
   <button class="settings-toggle" id="settings-toggle">
-    <span>MQTT SETTINGS</span>
+    <span>SETTINGS</span>
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
       <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
     </svg>
   </button>
   <div class="settings-body" id="settings-body">
+
+    <div class="section-divider">Warning Timers</div>
+    <div class="field-row">
+      <div class="field">
+        <label>Open Warning (s)</label>
+        <input id="s-open-warn" type="number" value="5" min="0" max="30" autocomplete="off"/>
+      </div>
+      <div class="field">
+        <label>Close Warning (s)</label>
+        <input id="s-close-warn" type="number" value="30" min="5" max="60" autocomplete="off"/>
+      </div>
+    </div>
+
+    <div class="section-divider">MQTT Connection</div>
     <div class="field">
       <label>Broker Host</label>
       <input id="s-host" type="text"
@@ -458,6 +256,14 @@ header{
 </div>
 
 <script>
+// ── WARNING TIMER SETTINGS ────────────────────────────────────
+// Change these to set default warning periods
+// OPEN_WARN_SEC  : 0 = no warning, 5 = 5 second warning before opening
+// CLOSE_WARN_SEC : programmable 15-45 seconds before closing
+var OPEN_WARN_SEC  = 5;   // seconds warning before OPEN fires relay
+var CLOSE_WARN_SEC = 30;  // seconds warning before CLOSE fires relay
+
+// ── MQTT CONFIG ───────────────────────────────────────────────
 var CFG = {
   host:     'fce59eca27d3485487331774265b264c.s1.eu.hivemq.cloud',
   port:     8884,
@@ -467,205 +273,218 @@ var CFG = {
 };
 
 try {
-  var saved = localStorage.getItem('gdo_cfg2');
-  if (saved) CFG = Object.assign(CFG, JSON.parse(saved));
+  var saved = localStorage.getItem('gdo_cfg3');
+  if (saved) {
+    var s = JSON.parse(saved);
+    CFG = Object.assign(CFG, s);
+    if (s.openWarn  !== undefined) OPEN_WARN_SEC  = s.openWarn;
+    if (s.closeWarn !== undefined) CLOSE_WARN_SEC = s.closeWarn;
+  }
 } catch(e) {}
 
 function applyToFields() {
-  document.getElementById('s-host').value     = CFG.host;
-  document.getElementById('s-port').value     = CFG.port;
-  document.getElementById('s-clientid').value = CFG.clientId;
-  document.getElementById('s-user').value     = CFG.user || '';
-  document.getElementById('s-pass').value     = CFG.pass || '';
+  document.getElementById('s-host').value       = CFG.host;
+  document.getElementById('s-port').value       = CFG.port;
+  document.getElementById('s-clientid').value   = CFG.clientId;
+  document.getElementById('s-user').value       = CFG.user || '';
+  document.getElementById('s-pass').value       = CFG.pass || '';
+  document.getElementById('s-open-warn').value  = OPEN_WARN_SEC;
+  document.getElementById('s-close-warn').value = CLOSE_WARN_SEC;
 }
 
+// ── MQTT PACKET HELPERS ───────────────────────────────────────
 function encStr(s) {
-  var b = unescape(encodeURIComponent(s)), l = b.length;
-  var a = new Uint8Array(2 + l);
-  a[0] = (l >> 8) & 0xff; a[1] = l & 0xff;
-  for (var i = 0; i < l; i++) a[2+i] = b.charCodeAt(i);
+  var b=unescape(encodeURIComponent(s)),l=b.length,a=new Uint8Array(2+l);
+  a[0]=(l>>8)&0xff;a[1]=l&0xff;
+  for(var i=0;i<l;i++)a[2+i]=b.charCodeAt(i);
   return a;
 }
 function cat() {
-  var args = Array.prototype.slice.call(arguments);
-  var tot = args.reduce(function(s,a){return s+a.length;},0);
-  var out = new Uint8Array(tot), off = 0;
+  var args=Array.prototype.slice.call(arguments);
+  var tot=args.reduce(function(s,a){return s+a.length;},0);
+  var out=new Uint8Array(tot),off=0;
   args.forEach(function(a){out.set(a,off);off+=a.length;});
   return out;
 }
 function remLen(n) {
-  var b = [];
-  do { var x = n&0x7f; n>>=7; if(n>0)x|=0x80; b.push(x); } while(n>0);
+  var b=[];
+  do{var x=n&0x7f;n>>=7;if(n>0)x|=0x80;b.push(x);}while(n>0);
   return new Uint8Array(b);
 }
-function mkConnect(id, user, pass) {
-  var proto = encStr('MQTT');
-  var flags = user ? 0xC2 : 0x02;
-  var vh = cat(proto, new Uint8Array([4,flags,0,60]));
-  var pl = encStr(id);
-  if (user) pl = cat(pl, encStr(user), encStr(pass||''));
-  var rem = cat(vh, pl);
-  return cat(new Uint8Array([0x10]), remLen(rem.length), rem);
+function mkConnect(id,user,pass) {
+  var proto=encStr('MQTT'),flags=user?0xC2:0x02;
+  var vh=cat(proto,new Uint8Array([4,flags,0,60]));
+  var pl=encStr(id);
+  if(user)pl=cat(pl,encStr(user),encStr(pass||''));
+  var rem=cat(vh,pl);
+  return cat(new Uint8Array([0x10]),remLen(rem.length),rem);
 }
-function mkSub(topic, pid) {
-  var id = new Uint8Array([0, pid&0xff]);
-  var t  = encStr(topic);
-  var pl = cat(id, t, new Uint8Array([0]));
-  return cat(new Uint8Array([0x82]), remLen(pl.length), pl);
+function mkSub(topic,pid) {
+  var id=new Uint8Array([0,pid&0xff]),t=encStr(topic);
+  var pl=cat(id,t,new Uint8Array([0]));
+  return cat(new Uint8Array([0x82]),remLen(pl.length),pl);
 }
-function mkPub(topic, msg) {
-  var t = encStr(topic);
-  var m = new TextEncoder().encode(msg);
-  var pl = cat(t, m);
-  return cat(new Uint8Array([0x30]), remLen(pl.length), pl);
+function mkPub(topic,msg) {
+  var t=encStr(topic),m=new TextEncoder().encode(msg);
+  var pl=cat(t,m);
+  return cat(new Uint8Array([0x30]),remLen(pl.length),pl);
 }
-function mkPing() { return new Uint8Array([0xC0,0x00]); }
+function mkPing(){return new Uint8Array([0xC0,0x00]);}
 
 function parsePkt(data) {
-  var b = new Uint8Array(data);
-  if (b.length < 2) return null;
-  var type = (b[0]>>4)&0x0f, mul=1, rem=0, i=1;
-  do { rem+=(b[i]&0x7f)*mul; mul*=128; i++; } while(b[i-1]&0x80);
-  var h = i;
-  if (type===2) return {type:'CONNACK', rc:b[h+1]};
-  if (type===9) return {type:'SUBACK'};
-  if (type===13) return {type:'PINGRESP'};
-  if (type===3) {
-    var tl = (b[h]<<8)|b[h+1];
-    var topic   = new TextDecoder().decode(b.slice(h+2, h+2+tl));
-    var payload = new TextDecoder().decode(b.slice(h+2+tl));
-    return {type:'PUBLISH', topic:topic, payload:payload};
+  var b=new Uint8Array(data);
+  if(b.length<2)return null;
+  var type=(b[0]>>4)&0x0f,mul=1,rem=0,i=1;
+  do{rem+=(b[i]&0x7f)*mul;mul*=128;i++;}while(b[i-1]&0x80);
+  var h=i;
+  if(type===2)return{type:'CONNACK',rc:b[h+1]};
+  if(type===9)return{type:'SUBACK'};
+  if(type===13)return{type:'PINGRESP'};
+  if(type===3){
+    var tl=(b[h]<<8)|b[h+1];
+    var topic=new TextDecoder().decode(b.slice(h+2,h+2+tl));
+    var payload=new TextDecoder().decode(b.slice(h+2+tl));
+    return{type:'PUBLISH',topic:topic,payload:payload};
   }
   return null;
 }
 
-var ws=null, mqttOk=false, pingT=null, reconT=null, pid=1;
-var warnActive=false, warnEnd=null, warnT=null, logCount=0;
+// ── STATE ─────────────────────────────────────────────────────
+var ws=null,mqttOk=false,pingT=null,reconT=null,pid=1;
+var warnActive=false,warnEnd=null,warnTotal=0,warnT=null,logCount=0;
+var pendingCmd=null,pendingTimer=null;
 
-function mqttConnect() {
-  if (ws) { try{ws.close();}catch(e){} ws=null; }
-  clearTimeout(reconT); clearInterval(pingT);
-  mqttOk = false;
-  setConn('connecting');
-  addLog('Connecting to ' + CFG.host + '...', 'info');
+// ── WARNING + CADENCE ─────────────────────────────────────────
+// Cadence stages are calculated as fractions of total warning time
+// so they always scale correctly regardless of warning duration
+//
+// Stage 1: first 50% of time  → slow (relaxed)
+// Stage 2: 50% to 75% of time → medium (getting urgent)
+// Stage 3: 75% to 90% of time → fast (urgent)
+// Stage 4: last 10% of time   → rapid beeping (imminent)
+//
+// The Pico firmware uses the same proportional logic
 
-  var url = 'wss://' + CFG.host + ':' + CFG.port + '/mqtt';
-  try {
-    ws = new WebSocket(url, 'mqtt');
-  } catch(e) {
-    addLog('WS create failed: ' + e.message, 'err');
-    setConn('error');
-    reconT = setTimeout(mqttConnect, 6000);
-    return;
-  }
-  ws.binaryType = 'arraybuffer';
-
-  ws.onopen = function() {
-    addLog('Socket open — authenticating...', 'info');
-    try {
-      var pkt = mkConnect(CFG.clientId, CFG.user, CFG.pass);
-      ws.send(pkt.buffer);
-    } catch(e) {
-      addLog('CONNECT send failed: ' + e.message, 'err');
-    }
-  };
-
-  ws.onmessage = function(ev) {
-    try {
-      var pkt = parsePkt(ev.data);
-      if (!pkt) return;
-      if (pkt.type==='CONNACK') {
-        if (pkt.rc===0) {
-          mqttOk = true;
-          setConn('connected');
-          addLog('MQTT connected!', 'ok');
-          pid=1;
-          ws.send(mkSub('gdo/status',  pid++).buffer);
-          ws.send(mkSub('gdo/warning', pid++).buffer);
-          pingT = setInterval(function(){
-            if(ws&&ws.readyState===1) ws.send(mkPing().buffer);
-          }, 45000);
-        } else {
-          addLog('Auth refused rc=' + pkt.rc, 'err');
-          setConn('error');
-        }
-      }
-      if (pkt.type==='PUBLISH') {
-        var v = pkt.payload.trim();
-        if (pkt.topic==='gdo/status') {
-          updateStatus(v);
-          addLog('Door: ' + v, v==='OPEN'?'ok':v==='MOVING'?'warn':'info');
-        }
-        if (pkt.topic==='gdo/warning') {
-          if (v==='ON') showWarn(30); else hideWarn();
-        }
-      }
-    } catch(e) {
-      addLog('Parse error: '+e.message, 'err');
-    }
-  };
-
-  ws.onerror = function(e) {
-    addLog('WebSocket error — check credentials', 'err');
-    setConn('error');
-  };
-
-  ws.onclose = function(e) {
-    mqttOk = false;
-    clearInterval(pingT);
-    setConn('offline');
-    addLog('Disconnected (code ' + e.code + ') — retry in 6s', 'warn');
-    reconT = setTimeout(mqttConnect, 6000);
-  };
-}
-
-function mqttPublish(topic, msg) {
-  if (!mqttOk || !ws || ws.readyState!==1) {
-    addLog('Not connected — cannot send', 'err');
-    return;
-  }
-  try {
-    ws.send(mkPub(topic, msg).buffer);
-  } catch(e) {
-    addLog('Publish error: '+e.message, 'err');
-  }
-}
-
-function setConn(s) {
-  var pill  = document.getElementById('conn-pill');
-  var label = document.getElementById('conn-label');
-  pill.className = '';
-  if (s==='connected')  { pill.classList.add('connected'); label.textContent='ONLINE'; }
-  else if (s==='error') { pill.classList.add('error');     label.textContent='ERROR'; }
-  else if (s==='connecting') { label.textContent='CONNECTING'; }
-  else { label.textContent='OFFLINE'; }
-}
-
-function updateStatus(s) {
-  var badge = document.getElementById('status-badge');
-  badge.textContent = s;
-  badge.className = 'status-badge ' + (s||'').toLowerCase();
-}
-
-function showWarn(sec) {
-  warnActive=true; warnEnd=Date.now()+sec*1000;
-  document.getElementById('warn-banner').classList.add('visible');
+function showWarn(sec, cmd) {
+  warnActive=true;
+  warnEnd=Date.now()+sec*1000;
+  warnTotal=sec;
+  var banner=document.getElementById('warn-banner');
+  banner.classList.add('visible');
+  if(cmd==='OPEN') banner.classList.add('opening');
+  else banner.classList.remove('opening');
+  document.getElementById('warn-text').textContent =
+    cmd==='OPEN' ? 'OPENING IN' : 'SOUNDER ACTIVE · CLOSING IN';
   document.getElementById('countdown').textContent=sec;
+  document.getElementById('warn-progress-fill').style.width='100%';
   clearInterval(warnT);
   warnT=setInterval(function(){
-    var r=Math.max(0,Math.ceil((warnEnd-Date.now())/1000));
-    document.getElementById('countdown').textContent=r;
-    if(r===0){clearInterval(warnT);hideWarn();}
+    var rem=Math.max(0,Math.ceil((warnEnd-Date.now())/1000));
+    var pct=Math.max(0,((warnEnd-Date.now())/(warnTotal*1000))*100).toFixed(1);
+    document.getElementById('countdown').textContent=rem;
+    document.getElementById('warn-progress-fill').style.width=pct+'%';
+    if(rem===0){clearInterval(warnT);hideWarn();}
   },250);
-  addLog('Sounder ON — door moves in '+sec+'s','warn');
+  addLog((cmd==='OPEN'?'Opening':'Sounder ON closing')+' in '+sec+'s','warn');
 }
+
 function hideWarn(){
   warnActive=false;
   clearInterval(warnT);
   document.getElementById('warn-banner').classList.remove('visible');
+  document.getElementById('warn-banner').classList.remove('opening');
+  document.getElementById('warn-progress-fill').style.width='0%';
 }
 
-function addLog(msg, type) {
+// ── SEND COMMAND WITH LOCAL WARNING ───────────────────────────
+// The UI manages its own countdown display.
+// The actual warning + relay timing is handled by the Pico.
+// UI sends: OPEN:<seconds> or CLOSE:<seconds>
+// Pico parses the seconds value from the message.
+function sendCmd(cmd) {
+  if(!mqttOk){addLog('Not connected','err');return;}
+  var sec = cmd==='OPEN' ? OPEN_WARN_SEC : CLOSE_WARN_SEC;
+  // Send command with warning duration appended
+  // e.g. "OPEN:5" or "CLOSE:30"
+  var msg = sec > 0 ? cmd+':'+sec : cmd;
+  mqttPublish('gdo/cmd', msg);
+  addLog('→ Sent: '+msg,'info');
+  // Show local countdown
+  if(sec > 0) showWarn(sec, cmd);
+}
+
+// ── MQTT CONNECT ──────────────────────────────────────────────
+function mqttConnect() {
+  if(ws){try{ws.close();}catch(e){}ws=null;}
+  clearTimeout(reconT);clearInterval(pingT);
+  mqttOk=false;setConn('connecting');
+  addLog('Connecting to '+CFG.host+'...','info');
+  var url='wss://'+CFG.host+':'+CFG.port+'/mqtt';
+  try{ws=new WebSocket(url,'mqtt');}
+  catch(e){addLog('WS failed: '+e.message,'err');setConn('error');reconT=setTimeout(mqttConnect,6000);return;}
+  ws.binaryType='arraybuffer';
+  ws.onopen=function(){
+    addLog('Socket open — authenticating...','info');
+    try{ws.send(mkConnect(CFG.clientId,CFG.user,CFG.pass).buffer);}
+    catch(e){addLog('CONNECT failed: '+e.message,'err');}
+  };
+  ws.onmessage=function(ev){
+    try{
+      var pkt=parsePkt(ev.data);
+      if(!pkt)return;
+      if(pkt.type==='CONNACK'){
+        if(pkt.rc===0){
+          mqttOk=true;setConn('connected');addLog('MQTT connected!','ok');
+          pid=1;
+          ws.send(mkSub('gdo/status',pid++).buffer);
+          ws.send(mkSub('gdo/warning',pid++).buffer);
+          pingT=setInterval(function(){if(ws&&ws.readyState===1)ws.send(mkPing().buffer);},45000);
+        }else{addLog('Auth refused rc='+pkt.rc,'err');setConn('error');}
+      }
+      if(pkt.type==='PUBLISH'){
+        var v=pkt.payload.trim();
+        if(pkt.topic==='gdo/status'){
+          updateStatus(v);
+          addLog('Door: '+v,v==='OPEN'?'ok':v==='MOVING'?'warn':'info');
+        }
+        if(pkt.topic==='gdo/warning'){
+          if(v==='OFF')hideWarn();
+          // ON is handled locally by showWarn() when button pressed
+        }
+      }
+    }catch(e){addLog('Parse error: '+e.message,'err');}
+  };
+  ws.onerror=function(){addLog('WebSocket error','err');setConn('error');};
+  ws.onclose=function(e){
+    mqttOk=false;clearInterval(pingT);setConn('offline');
+    addLog('Disconnected ('+e.code+') — retry 6s','warn');
+    reconT=setTimeout(mqttConnect,6000);
+  };
+}
+
+function mqttPublish(topic,msg){
+  if(!mqttOk||!ws||ws.readyState!==1){addLog('Not connected','err');return;}
+  try{ws.send(mkPub(topic,msg).buffer);}catch(e){addLog('Publish error: '+e.message,'err');}
+}
+
+// ── UI HELPERS ────────────────────────────────────────────────
+function setConn(s){
+  var pill=document.getElementById('conn-pill');
+  var label=document.getElementById('conn-label');
+  pill.className='';
+  if(s==='connected'){pill.classList.add('connected');label.textContent='ONLINE';}
+  else if(s==='error'){pill.classList.add('error');label.textContent='ERROR';}
+  else if(s==='connecting'){label.textContent='CONNECTING';}
+  else{label.textContent='OFFLINE';}
+}
+
+function updateStatus(s){
+  var badge=document.getElementById('status-badge');
+  badge.textContent=s;
+  badge.className='status-badge '+(s||'').toLowerCase();
+}
+
+function addLog(msg,type){
   var el=document.getElementById('log');
   var ts=new Date().toTimeString().slice(0,8);
   var r=document.createElement('div');
@@ -677,54 +496,51 @@ function addLog(msg, type) {
   document.getElementById('log-count').textContent=logCount+' event'+(logCount!==1?'s':'');
 }
 
-function sendCmd(cmd) {
-  mqttPublish('gdo/cmd', cmd);
-  addLog('→ Sent: '+cmd,'info');
-}
-
-function toggleSettings() {
+function toggleSettings(){
   document.getElementById('settings-body').classList.toggle('visible');
   document.getElementById('settings-toggle').classList.toggle('open');
 }
 
-function saveAndConnect() {
-  CFG.host     = document.getElementById('s-host').value.trim() || CFG.host;
-  CFG.port     = parseInt(document.getElementById('s-port').value) || 8884;
+function saveAndConnect(){
+  OPEN_WARN_SEC  = Math.max(0, parseInt(document.getElementById('s-open-warn').value)  || 5);
+  CLOSE_WARN_SEC = Math.max(5, parseInt(document.getElementById('s-close-warn').value) || 30);
+  CFG.host     = document.getElementById('s-host').value.trim()     || CFG.host;
+  CFG.port     = parseInt(document.getElementById('s-port').value)  || 8884;
   CFG.clientId = document.getElementById('s-clientid').value.trim() ||
                  ('gdo-ui-'+Math.random().toString(16).slice(2,8));
   CFG.user     = document.getElementById('s-user').value.trim();
   CFG.pass     = document.getElementById('s-pass').value;
-  try { localStorage.setItem('gdo_cfg2', JSON.stringify(CFG)); } catch(e){}
-  addLog('Settings saved','info');
+  try{
+    localStorage.setItem('gdo_cfg3', JSON.stringify(
+      Object.assign({},CFG,{openWarn:OPEN_WARN_SEC,closeWarn:CLOSE_WARN_SEC})
+    ));
+  }catch(e){}
+  addLog('Saved: OPEN='+OPEN_WARN_SEC+'s CLOSE='+CLOSE_WARN_SEC+'s','ok');
   mqttConnect();
 }
 
-function addTap(id, fn) {
+// ── TOUCH-SAFE BUTTON BINDING ─────────────────────────────────
+function addTap(id,fn){
   var el=document.getElementById(id);
   if(!el)return;
   var busy=false;
   function go(e){
     e.preventDefault();
-    if(!busy){
-      busy=true;
-      fn();
-      setTimeout(function(){busy=false;},300);
-    }
+    if(!busy){busy=true;fn();setTimeout(function(){busy=false;},300);}
   }
-  el.addEventListener('touchend', go, {passive:false});
-  el.addEventListener('click', function(e){ if(!busy)fn(); });
+  el.addEventListener('touchend',go,{passive:false});
+  el.addEventListener('click',function(e){if(!busy)fn();});
 }
 
-window.addEventListener('load', function() {
+// ── INIT ──────────────────────────────────────────────────────
+window.addEventListener('load',function(){
   applyToFields();
   updateStatus('UNKNOWN');
-
   addTap('btn-open',        function(){sendCmd('OPEN');});
   addTap('btn-close',       function(){sendCmd('CLOSE');});
-  addTap('btn-stop',        function(){sendCmd('STOP');});
+  addTap('btn-stop',        function(){mqttPublish('gdo/cmd','STOP');hideWarn();addLog('→ Sent: STOP','info');});
   addTap('btn-save',        function(){saveAndConnect();});
   addTap('settings-toggle', function(){toggleSettings();});
-
   mqttConnect();
 });
 </script>
