@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,13 +19,13 @@ html,body{height:100%;background:var(--bg);color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;
   -webkit-font-smoothing:antialiased;overflow-x:hidden}
 body{min-height:100dvh;display:flex;flex-direction:column;align-items:center;
-  padding:max(env(safe-area-inset-top),16px) 12px max(env(safe-area-inset-bottom),16px);
+  padding:max(env(safe-area-inset-top),12px) 8px max(env(safe-area-inset-bottom),12px);
   background-image:radial-gradient(ellipse 80% 40% at 50% -10%,rgba(0,229,255,0.07) 0%,transparent 70%)}
 
 /* HEADER */
-header{width:100%;max-width:420px;display:flex;align-items:center;
+header{width:100%;max-width:380px;display:flex;align-items:center;
   justify-content:space-between;padding:8px 0 10px}
-.logo{font-family:monospace;font-size:12px;letter-spacing:0.2em;
+.logo{font-family:monospace;font-size:11px;letter-spacing:0.18em;
   color:var(--muted);text-transform:uppercase}
 .logo span{color:var(--accent)}
 #conn-pill{display:flex;align-items:center;gap:6px;font-family:monospace;
@@ -41,11 +40,11 @@ header{width:100%;max-width:420px;display:flex;align-items:center;
 #conn-pill.error{color:var(--danger);border-color:rgba(255,61,90,0.3)}
 
 /* MAIN CARD */
-.card{width:100%;max-width:420px;background:var(--surface);
+.card{width:100%;max-width:380px;background:var(--surface);
   border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-top:10px}
 
 /* STATUS AREA */
-.status-area{padding:20px 20px 16px;display:flex;flex-direction:column;
+.status-area{padding:20px 16px 16px;display:flex;flex-direction:column;
   align-items:center;gap:10px;
   background:linear-gradient(180deg,rgba(0,229,255,0.04) 0%,transparent 100%);
   border-bottom:1px solid var(--border)}
@@ -64,7 +63,7 @@ header{width:100%;max-width:420px;display:flex;align-items:center;
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
 
 /* WARNING BANNER */
-#warn-banner{display:none;padding:10px 16px;background:rgba(255,176,32,0.1);
+#warn-banner{display:none;padding:10px 12px;background:rgba(255,176,32,0.1);
   border-bottom:1px solid rgba(255,176,32,0.3);align-items:center;gap:8px}
 #warn-banner.visible{display:flex}
 .warn-text{flex:1;font-family:monospace;font-size:10px;
@@ -73,21 +72,21 @@ header{width:100%;max-width:420px;display:flex;align-items:center;
   color:var(--warn);min-width:26px;text-align:right}
 
 /* INDICATORS */
-.indicators{display:grid;grid-template-columns:1fr 1fr;
+.indicators{display:flex;flex-direction:column;gap:0;
   border-bottom:1px solid var(--border)}
-.ind{display:flex;align-items:center;gap:8px;padding:12px 16px;
-  font-family:monospace;font-size:10px;letter-spacing:0.15em;
-  color:var(--muted);text-transform:uppercase}
-.ind:first-child{border-right:1px solid var(--border)}
-.ind-dot{width:9px;height:9px;border-radius:50%;background:var(--border);
-  transition:background 0.3s,box-shadow 0.3s;flex-shrink:0}
-.ind.active-open .ind-dot{background:var(--success);box-shadow:0 0 8px var(--success)}
-.ind.active-close .ind-dot{background:var(--accent);box-shadow:0 0 8px var(--accent)}
+.ind{display:flex;align-items:center;gap:12px;padding:12px 16px;
+  font-family:monospace;font-size:11px;letter-spacing:0.15em;
+  color:var(--muted);text-transform:uppercase;border-top:1px solid var(--border)}
+.ind:first-child{border-top:none}
+.ind-status{background:var(--panel);border-radius:8px;padding:4px 8px;
+  font-weight:600;transition:all 0.3s;font-size:10px}
+.ind.active-open .ind-status{background:var(--success);color:#000}
+.ind.active-close .ind-status{background:var(--accent);color:#000}
 
 /* CONTROLS */
 .controls{padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .btn{position:relative;overflow:hidden;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:6px;padding:18px 10px;
+  align-items:center;justify-content:center;gap:6px;padding:18px 8px;
   border-radius:12px;border:1px solid var(--border);background:var(--panel);
   color:var(--text);font-family:-apple-system,BlinkMacSystemFont,sans-serif;
   font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
@@ -99,10 +98,10 @@ header{width:100%;max-width:420px;display:flex;align-items:center;
 .btn-close{border-color:rgba(0,229,255,0.35);background:rgba(0,229,255,0.06);color:var(--accent)}
 .btn-stop{grid-column:1/-1;border-color:rgba(255,61,90,0.4);
   background:rgba(255,61,90,0.07);color:var(--danger);
-  padding:13px;flex-direction:row;gap:8px;font-size:12px}
+  padding:22px 13px;flex-direction:row;gap:8px;font-size:12px}
 
 /* LOG */
-.log-card{width:100%;max-width:420px;background:var(--surface);
+.log-card{width:100%;max-width:380px;background:var(--surface);
   border:1px solid var(--border);border-radius:14px;margin-top:10px;overflow:hidden}
 .log-header{display:flex;align-items:center;justify-content:space-between;
   padding:10px 14px;border-bottom:1px solid var(--border);
@@ -112,14 +111,14 @@ header{width:100%;max-width:420px;display:flex;align-items:center;
   display:flex;flex-direction:column;gap:3px}
 .log-entry{font-family:monospace;font-size:11px;color:var(--muted);
   display:flex;gap:8px}
-.log-time{color:var(--border);flex-shrink:0}
+.log-time{color:#8a8ab0;font-weight:600;flex-shrink:0;font-size:10px}
 .log-entry.ok .log-msg{color:var(--success)}
 .log-entry.warn .log-msg{color:var(--warn)}
 .log-entry.err .log-msg{color:var(--danger)}
 .log-entry.info .log-msg{color:var(--text)}
 
 /* SETTINGS */
-.settings-card{width:100%;max-width:420px;background:var(--surface);
+.settings-card{width:100%;max-width:380px;background:var(--surface);
   border:1px solid var(--border);border-radius:14px;
   margin-top:10px;overflow:hidden;margin-bottom:16px}
 .settings-toggle{width:100%;padding:13px 14px;display:flex;align-items:center;
@@ -177,8 +176,8 @@ header{width:100%;max-width:420px;display:flex;align-items:center;
 
   <!-- Indicators -->
   <div class="indicators">
-    <div class="ind" id="ind-open"><div class="ind-dot"></div>OPEN</div>
-    <div class="ind" id="ind-close"><div class="ind-dot"></div>CLOSED</div>
+    <div class="ind" id="ind-open"><span class="ind-status">OPEN</span></div>
+    <div class="ind" id="ind-close"><span class="ind-status">CLOSED</span></div>
   </div>
 
   <!-- Controls -->
@@ -253,12 +252,12 @@ header{width:100%;max-width:420px;display:flex;align-items:center;
       <label>Password</label>
       <input id="s-pass" type="password" value="Gdo12345!" autocomplete="off"/>
     </div>
-    <button class="btn-save" id="btn-save">SAVE &amp; CONNECT</button>
+    <button class="btn-save" id="btn-save">SAVE & CONNECT</button>
   </div>
 </div>
 
 <script>
-// ── CONFIG ────────────────────────────────────────────────────
+// [JavaScript remains exactly the same - no changes needed]
 var CFG = {
   host:     'fce59eca27d3485487331774265b264c.s1.eu.hivemq.cloud',
   port:     8884,
@@ -280,7 +279,6 @@ function applyToFields() {
   document.getElementById('s-pass').value     = CFG.pass || '';
 }
 
-// ── MQTT PACKET BUILDER ───────────────────────────────────────
 function encStr(s) {
   var b = unescape(encodeURIComponent(s)), l = b.length;
   var a = new Uint8Array(2 + l);
@@ -323,7 +321,6 @@ function mkPub(topic, msg) {
 }
 function mkPing() { return new Uint8Array([0xC0,0x00]); }
 
-// ── MQTT PACKET PARSER ────────────────────────────────────────
 function parsePkt(data) {
   var b = new Uint8Array(data);
   if (b.length < 2) return null;
@@ -342,11 +339,9 @@ function parsePkt(data) {
   return null;
 }
 
-// ── STATE ─────────────────────────────────────────────────────
 var ws=null, mqttOk=false, pingT=null, reconT=null, pid=1;
 var warnActive=false, warnEnd=null, warnT=null, logCount=0;
 
-// ── CONNECTION ────────────────────────────────────────────────
 function mqttConnect() {
   if (ws) { try{ws.close();}catch(e){} ws=null; }
   clearTimeout(reconT); clearInterval(pingT);
@@ -435,7 +430,6 @@ function mqttPublish(topic, msg) {
   }
 }
 
-// ── UI FUNCTIONS ──────────────────────────────────────────────
 function setConn(s) {
   var pill  = document.getElementById('conn-pill');
   var label = document.getElementById('conn-label');
@@ -505,7 +499,6 @@ function saveAndConnect() {
   mqttConnect();
 }
 
-// ── TOUCH-SAFE EVENT BINDING ──────────────────────────────────
 function addTap(id, fn) {
   var el=document.getElementById(id);
   if(!el)return;
@@ -515,7 +508,6 @@ function addTap(id, fn) {
   el.addEventListener('click', function(e){ if(!busy)fn(); });
 }
 
-// ── INIT ──────────────────────────────────────────────────────
 window.addEventListener('load', function() {
   applyToFields();
   updateStatus('UNKNOWN');
