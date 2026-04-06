@@ -395,13 +395,15 @@ function hideWarn(){
 // Pico parses the seconds value from the message.
 function sendCmd(cmd) {
   if(!mqttOk){addLog('Not connected','err');return;}
+  // Always read directly from fields — no need to tap Save first
+  var openVal  = parseInt(document.getElementById('s-open-warn').value);
+  var closeVal = parseInt(document.getElementById('s-close-warn').value);
+  OPEN_WARN_SEC  = isNaN(openVal)  ? 5  : Math.max(0, openVal);
+  CLOSE_WARN_SEC = isNaN(closeVal) ? 30 : Math.max(1, closeVal);
   var sec = cmd==='OPEN' ? OPEN_WARN_SEC : CLOSE_WARN_SEC;
-  // Send command with warning duration appended
-  // e.g. "OPEN:5" or "CLOSE:30"
   var msg = sec > 0 ? cmd+':'+sec : cmd;
   mqttPublish('gdo/cmd', msg);
   addLog('→ Sent: '+msg,'info');
-  // Show local countdown
   if(sec > 0) showWarn(sec, cmd);
 }
 
